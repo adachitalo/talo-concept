@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TALO — THE HONEST HOUSE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #F6F3EE;
+    --c-bg-warm: #EDE8E0;
+    --c-dark: #2A2A24;
+    --c-forest: #3C4A35;
+    --c-forest-light: #5B6B52;
+    --c-wood: #8B7355;
+    --c-wood-light: #A89478;
+    --c-cream: #FAF8F4;
+    --c-sand: #D4CCBE;
+    --c-text: #3A3A34;
+    --c-text-light: #7A7A70;
+    --c-accent: #6B7F5E;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-jp: 'Noto Serif JP', serif;
+    --font-sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-family: var(--font-jp);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ═══════════════════════════════════
+     GRAIN OVERLAY
+  ═══════════════════════════════════ */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ═══════════════════════════════════
+     NAVIGATION
+  ═══════════════════════════════════ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.5s ease, backdrop-filter 0.5s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(246, 243, 238, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .nav-logo {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.35em;
+    color: var(--c-forest);
+    text-transform: uppercase;
+  }
+
+  .nav-tagline {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--c-wood-light);
+    letter-spacing: 0.08em;
+  }
+
+  /* ═══════════════════════════════════
+     HERO
+  ═══════════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%; left: -20%;
+    width: 140%; height: 140%;
+    background: radial-gradient(ellipse at 30% 40%, rgba(107, 127, 94, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(139, 115, 85, 0.06) 0%, transparent 50%);
+    animation: heroFloat 20s ease-in-out infinite;
+  }
+
+  @keyframes heroFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-2%, 2%) scale(1.02); }
+  }
+
+  .hero-label {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 1s ease 0.3s forwards;
+    position: relative;
+  }
+
+  .hero-title-en {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--c-forest);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1.2s ease 0.5s forwards;
+    position: relative;
+  }
+
+  .hero-title-jp {
+    font-family: var(--font-jp);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: 200;
+    color: var(--c-wood);
+    letter-spacing: 0.3em;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1.2s ease 0.7s forwards;
+    position: relative;
+  }
+
+  .hero-lines {
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1.2s ease 1s forwards;
+  }
+
+  .hero-line {
+    font-family: var(--font-jp);
+    font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+    font-weight: 300;
+    color: var(--c-text-light);
+    letter-spacing: 0.15em;
+    line-height: 2.4;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.5s forwards;
+  }
+
+  .hero-scroll span {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--c-sand);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--c-sand);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--c-forest);
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollDown {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ═══════════════════════════════════
+     SECTION COMMON
+  ═══════════════════════════════════ */
+  section {
+    padding: 8rem 2rem;
+    position: relative;
+  }
+
+  .section-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--c-accent);
+  }
+
+  .section-heading {
+    font-family: var(--font-jp);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 400;
+    color: var(--c-forest);
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+  }
+
+  .section-body p {
+    font-family: var(--font-jp);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--c-text);
+    line-height: 2.2;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.8rem;
+  }
+
+  .section-body p:last-child { margin-bottom: 0; }
+
+  /* ═══════════════════════════════════
+     ACCENT QUOTE
+  ═══════════════════════════════════ */
+  .accent-quote {
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    background: var(--c-cream);
+  }
+
+  .accent-quote::before,
+  .accent-quote::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--c-sand));
+  }
+
+  .accent-quote::before { top: 0; background: linear-gradient(to bottom, transparent, var(--c-sand)); }
+  .accent-quote::after { bottom: 0; background: linear-gradient(to top, transparent, var(--c-sand)); }
+
+  .accent-text {
+    font-family: var(--font-jp);
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 400;
+    color: var(--c-forest);
+    letter-spacing: 0.2em;
+    line-height: 2;
+  }
+
+  /* ═══════════════════════════════════
+     TOTAL LOG SECTION (dark)
+  ═══════════════════════════════════ */
+  .section-dark {
+    background: var(--c-forest);
+    color: var(--c-cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-dark::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(139, 115, 85, 0.15) 0%, transparent 60%);
+  }
+
+  .section-dark .section-label { color: var(--c-wood-light); }
+  .section-dark .section-label::before { background: var(--c-wood-light); }
+  .section-dark .section-heading { color: var(--c-cream); }
+  .section-dark .section-body p { color: rgba(250, 248, 244, 0.8); }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .pillar {
+    padding: 2rem 1.5rem;
+    border-top: 1px solid rgba(250, 248, 244, 0.15);
+    position: relative;
+  }
+
+  .pillar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--c-wood-light);
+    transition: width 1.2s ease;
+  }
+
+  .pillar.in-view::before { width: 100%; }
+
+  .pillar-title {
+    font-family: var(--font-jp);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--c-cream);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .pillar-body {
+    font-family: var(--font-jp);
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(250, 248, 244, 0.65);
+    line-height: 2;
+    letter-spacing: 0.03em;
+  }
+
+  /* ═══════════════════════════════════
+     CUSTOM DESIGN SECTION
+  ═══════════════════════════════════ */
+  .highlight-box {
+    margin-top: 3rem;
+    padding: 2.5rem;
+    background: var(--c-cream);
+    border-left: 2px solid var(--c-accent);
+    position: relative;
+  }
+
+  .highlight-box p {
+    font-family: var(--font-jp);
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--c-forest);
+    line-height: 2;
+    letter-spacing: 0.05em;
+  }
+
+  /* ═══════════════════════════════════
+     EPIGRAPH (philosophical premise)
+  ═══════════════════════════════════ */
+  .epigraph {
+    padding: 6rem 2rem;
+    text-align: center;
+    background: var(--c-forest);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .epigraph::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(139, 115, 85, 0.1) 0%, transparent 70%);
+  }
+
+  .epigraph-quote {
+    font-family: var(--font-jp);
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    font-weight: 300;
+    color: var(--c-cream);
+    letter-spacing: 0.18em;
+    line-height: 2.2;
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+
+  .epigraph-meaning {
+    font-family: var(--font-jp);
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgba(250, 248, 244, 0.45);
+    letter-spacing: 0.08em;
+    line-height: 2;
+    position: relative;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  /* ═══════════════════════════════════
+     PROMISE SECTION
+  ═══════════════════════════════════ */
+  .section-promise {
+    background: var(--c-bg-warm);
+    text-align: center;
+    padding: 10rem 2rem;
+  }
+
+  .promise-heading {
+    font-family: var(--font-jp);
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    font-weight: 400;
+    color: var(--c-forest);
+    letter-spacing: 0.12em;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  .promise-body {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .promise-body p {
+    font-family: var(--font-jp);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--c-text);
+    line-height: 2.2;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.5rem;
+  }
+
+  .promise-closing {
+    font-family: var(--font-jp);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--c-forest);
+    letter-spacing: 0.15em;
+    margin-top: 3rem;
+  }
+
+  /* ═══════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════ */
+  footer {
+    padding: 3rem;
+    text-align: center;
+    background: var(--c-forest);
+  }
+
+  .footer-logo {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: rgba(250, 248, 244, 0.5);
+    text-transform: uppercase;
+  }
+
+  .footer-sub {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: rgba(250, 248, 244, 0.3);
+    margin-top: 0.5rem;
+  }
+
+  /* ═══════════════════════════════════
+     SCROLL ANIMATIONS
+  ═══════════════════════════════════ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* ═══════════════════════════════════
+     SEPARATOR
+  ═══════════════════════════════════ */
+  .sep {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    height: 0;
+    position: relative;
+  }
+
+  .sep::before {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: var(--c-sand);
+    position: absolute;
+    top: 50%;
+  }
+
+  /* ═══════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════ */
+
+  /* Large tablet / small desktop (1024px) */
+  @media (max-width: 1024px) {
+    section { padding: 6rem 2rem; }
+    .section-inner { max-width: 680px; }
+    .pillars { gap: 2rem; }
+    .section-promise { padding: 8rem 2rem; }
+    .hero { min-height: 90vh; }
+  }
+
+  /* Tablet (768px) */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .hero { padding: 5rem 1.5rem; min-height: 85vh; }
+    .hero-title-en { letter-spacing: 0.08em; }
+    .hero-title-jp { letter-spacing: 0.2em; margin-bottom: 3rem; }
+    .hero-line { letter-spacing: 0.08em; line-height: 2.2; }
+    .hero-scroll { bottom: 2rem; }
+
+    .epigraph { padding: 4rem 1.5rem; }
+    .epigraph-quote { letter-spacing: 0.1em; }
+
+    .section-heading { margin-bottom: 2rem; }
+    .section-body p { font-size: 0.9rem; line-height: 2; margin-bottom: 1.5rem; }
+
+    .pillars { grid-template-columns: 1fr; gap: 1.5rem; }
+    .pillar { padding: 1.5rem 1rem; }
+
+    .accent-quote { padding: 4rem 1.5rem; }
+    .accent-text { letter-spacing: 0.12em; }
+    .accent-quote::before,
+    .accent-quote::after { height: 40px; }
+
+    .highlight-box { padding: 2rem 1.5rem; }
+
+    .section-promise { padding: 6rem 1.5rem; }
+    .promise-heading { letter-spacing: 0.06em; }
+
+    footer { padding: 2.5rem 1.5rem; }
+  }
+
+  /* Small phone (480px) */
+  @media (max-width: 480px) {
+    nav { padding: 0.8rem 1rem; }
+    .nav-logo { font-size: 0.75rem; letter-spacing: 0.25em; }
+    .nav-tagline { font-size: 0.7rem; }
+
+    section { padding: 4rem 1.2rem; }
+    .hero { padding: 4rem 1.2rem; min-height: 100svh; }
+    .hero-label { font-size: 0.6rem; letter-spacing: 0.35em; margin-bottom: 2rem; }
+    .hero-title-en { letter-spacing: 0.05em; }
+    .hero-title-jp { font-size: 1.1rem; letter-spacing: 0.15em; margin-bottom: 2.5rem; }
+    .hero-line { font-size: 0.8rem; letter-spacing: 0.06em; line-height: 2.4; }
+    .hero-scroll { bottom: 1.5rem; }
+    .scroll-line { height: 30px; }
+
+    .epigraph { padding: 3.5rem 1.2rem; }
+    .epigraph-quote { font-size: 1rem; letter-spacing: 0.08em; line-height: 2; }
+    .epigraph-meaning { font-size: 0.7rem; }
+
+    .section-label { font-size: 0.6rem; letter-spacing: 0.35em; gap: 1rem; margin-bottom: 1rem; }
+    .section-label::before { width: 25px; }
+    .section-heading { font-size: 1.3rem; letter-spacing: 0.05em; line-height: 1.7; margin-bottom: 1.8rem; }
+    .section-body p { font-size: 0.85rem; line-height: 2; letter-spacing: 0.02em; margin-bottom: 1.2rem; }
+
+    .accent-quote { padding: 3rem 1.2rem; }
+    .accent-text { font-size: 1.1rem; letter-spacing: 0.08em; }
+    .accent-quote::before,
+    .accent-quote::after { height: 30px; }
+
+    .pillar { padding: 1.2rem 0.8rem; }
+    .pillar-title { font-size: 1rem; }
+    .pillar-body { font-size: 0.8rem; line-height: 1.9; }
+
+    .highlight-box { padding: 1.5rem 1.2rem; margin-top: 2rem; }
+    .highlight-box p { font-size: 0.85rem; line-height: 1.9; }
+
+    .section-promise { padding: 5rem 1.2rem; }
+    .promise-heading { font-size: 1.2rem; letter-spacing: 0.05em; line-height: 1.9; }
+    .promise-body p { font-size: 0.85rem; }
+    .promise-closing { font-size: 1rem; letter-spacing: 0.1em; }
+
+    footer { padding: 2rem 1rem; }
+    .footer-logo { font-size: 0.65rem; }
+    .footer-sub { font-size: 0.75rem; }
+  }
+
+  /* Fix for iOS Safari 100vh issue */
+  @supports (min-height: 100svh) {
+    .hero { min-height: 100svh; }
+  }
+
+  /* Hover states only for pointer devices */
+  @media (hover: hover) {
+    .nav-logo { transition: color 0.3s ease; }
+    .nav-logo:hover { color: var(--c-wood); }
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .hero-label, .hero-title-en, .hero-title-jp, .hero-lines, .hero-scroll {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  /* Print styles */
+  @media print {
+    nav, .hero-scroll { display: none; }
+    body::after { display: none; }
+    .hero { min-height: auto; padding: 3rem 2rem; }
+    section { padding: 2rem; }
+    .section-dark { background: #fff; color: #333; }
+    .section-dark .section-heading { color: #333; }
+    .section-dark .section-body p { color: #555; }
+    .pillar-title { color: #333; }
+    .pillar-body { color: #555; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">TALO</div>
+  <div class="nav-tagline">since 1988</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">TALO Concept</div>
+  <h1 class="hero-title-en">THE HONEST HOUSE</h1>
+  <p class="hero-title-jp">正直な家。</p>
+  <div class="hero-lines">
+    <p class="hero-line">飾るためではなく、住まうために。</p>
+    <p class="hero-line">見せるためではなく、守るために。</p>
+    <p class="hero-line">ログハウスの本質を、すべての人に。</p>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- EPIGRAPH -->
+<div class="epigraph">
+  <p class="epigraph-quote reveal">建物は環境の一部であり、<br>人間は自然の一部である。</p>
+  <p class="epigraph-meaning reveal reveal-delay-1">自然や環境との調和なくして、人間も建物も成り立たない。<br>この原理こそが、TALOのすべての出発点である。</p>
+</div>
+
+<!-- SECTION 1: WHY LOG HOUSE -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">Why Log House</div>
+    <h2 class="section-heading reveal reveal-delay-1">なぜ、ログハウスなのか。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">ログハウスは、人類が最も古くから作り続けてきた住まいのかたちの一つである。丸太を積み、壁とし、屋根をかける。その構造は極めてプリミティブであり、シンプルである。</p>
+      <p class="reveal reveal-delay-2">しかし、そのシンプルさの中にこそ、他の工法にはない強さがある。</p>
+      <p class="reveal reveal-delay-2">分厚い無垢の木が周囲を包み込む。それだけで、断熱、蓄熱、調湿、耐震性、耐火性が生まれる。接着剤も合板も、化学物質も要らない。家そのものが呼吸し、住む人の健康を守る。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACCENT QUOTE -->
+<div class="accent-quote">
+  <p class="accent-text reveal">絶対的な安心。絶対的な安全。絶対的な快適。</p>
+</div>
+
+<!-- SECTION 2: ORIGIN -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">Our Origin</div>
+    <h2 class="section-heading reveal reveal-delay-1">北欧の知恵を、日本の風土に。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">1988年、フィンランドで建築家として活動していた創業者が、一つの確信を持ってTALOを設立した。</p>
+      <p class="reveal reveal-delay-2">「フィンランドのマシンカットログハウスを、日本の気候・土地・人に合わせて進化させれば、理想の住まいになる」</p>
+      <p class="reveal reveal-delay-2">以来、35年以上にわたり、4700棟を超えるログハウスを一棟一棟、日本各地の風土に合わせて建ててきた。北欧の原型をそのまま持ち込むのではなく、日本という風土の中で進化させ続けること。それがTALOの創業以来変わらぬ哲学である。</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: TOTAL LOG (dark) -->
+<section class="section-dark">
+  <div class="section-inner" style="max-width:900px;">
+    <div class="section-label reveal">Total Log</div>
+    <h2 class="section-heading reveal reveal-delay-1">なぜ、「総ログ」で<br>なければならないのか。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">ログハウスの安心・安全・快適は、分厚いログ壁が家全体を包み込むことで初めて実現する。一階だけログで、二階は別の工法——それではログハウスの本質は届かない。</p>
+      <p class="reveal reveal-delay-2">TALOが「総ログ」に拘るのは、それが商品の差別化のためではなく、お客様への約束だからである。</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal reveal-delay-1">
+        <div class="pillar-title">地震に強い。</div>
+        <div class="pillar-body">ログ壁の自重と組み上げ構造が、強靭な耐震性能を生み出す。</div>
+      </div>
+      <div class="pillar reveal reveal-delay-2">
+        <div class="pillar-title">火災に強い。</div>
+        <div class="pillar-body">分厚い無垢材は表面が炭化して内部を守る。合板や接着剤を使わないから、有害ガスの発生も抑える。</div>
+      </div>
+      <div class="pillar reveal reveal-delay-3">
+        <div class="pillar-title">心地良い。</div>
+        <div class="pillar-body">無垢材で作られた究極の木の家。家そのものが呼吸し、調湿し、家族の健康を守る。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: CUSTOM DESIGN -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">Custom Design</div>
+    <h2 class="section-heading reveal reveal-delay-1">あなたの土地に、あなたの家を。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">南北に長い日本には、雪国もあれば亜熱帯もある。広い土地もあれば、狭小な変形地もある。家族のかたちも、暮らし方も、一つとして同じものはない。</p>
+      <p class="reveal reveal-delay-2">だからTALOは、創業当初から自由設計に拘り続けてきた。画一的なプランを押し付けるのではなく、それぞれの土地、気候、ライフスタイルに合わせた一棟を、設計力と技術力でかたちにする。</p>
+    </div>
+    <div class="highlight-box reveal reveal-delay-2">
+      <p>バリエーション豊かなログ材——フィンランド産パイン材から、国産の杉材、檜材まで。フィンランド材を使う理由はただ一つ、それが良いものだからである。産地への盲信ではなく、品質への純粋な選択である。</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE -->
+<section class="section-promise">
+  <div class="section-label reveal" style="justify-content:center;">Our Promise</div>
+  <h2 class="promise-heading reveal reveal-delay-1">日本人による、日本人のための、<br>日本のログハウス。</h2>
+  <div class="promise-body">
+    <p class="reveal reveal-delay-2">北欧の知恵と、日本の風土と、お客様一人ひとりの暮らし。そのすべてを接点に、一棟のログハウスをつくる。</p>
+    <p class="reveal reveal-delay-2">飾らない。嘘をつかない。木という素材に正直に向き合い、住む人の安心を絶対に裏切らない。</p>
+    <p class="promise-closing reveal reveal-delay-3">それが、TALOの約束である。</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">TALO International</div>
+  <div class="footer-sub">The Honest House — since 1988</div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Intersection Observer for scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -60px 0px'
+  });
+
+  document.querySelectorAll('.reveal, .pillar').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
