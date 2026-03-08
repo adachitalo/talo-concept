@@ -397,6 +397,35 @@
   }
 
   /* ═══════════════════════════════════
+     SECTION LINK
+  ═══════════════════════════════════ */
+  .section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 2.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--c-wood-light);
+    transition: color 0.3s ease, gap 0.3s ease;
+  }
+  .section-link:hover {
+    color: var(--c-cream);
+    gap: 1.2rem;
+  }
+  .section-link::after {
+    content: '→';
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+  }
+  .section-link:hover::after {
+    transform: translateX(4px);
+  }
+
+  /* ═══════════════════════════════════
      EPIGRAPH (philosophical premise)
   ═══════════════════════════════════ */
   .epigraph {
@@ -760,6 +789,7 @@
         <div class="pillar-body">無垢材で作られた究極の木の家。家そのものが呼吸し、調湿し、家族の健康を守る。</div>
       </div>
     </div>
+    <a href="totallog.html" class="section-link reveal reveal-delay-3">Log on Log の技術を詳しく見る</a>
   </div>
 </section>
 
