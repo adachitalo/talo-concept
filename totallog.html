@@ -263,6 +263,80 @@
     letter-spacing: 0.18em; line-height: 2;
   }
 
+  /* DIAGRAM: What is Log on Log */
+  .diagram-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; margin-top: 3rem;
+  }
+  .diagram-card {
+    text-align: center; padding: 2.5rem 1.5rem 2rem;
+    position: relative;
+  }
+  .diagram-card-no {
+    border: 1px solid var(--c-sand);
+    background: var(--c-bg);
+  }
+  .diagram-card-yes {
+    border: 2px solid var(--c-accent);
+    background: var(--c-cream);
+  }
+  .diagram-badge-no, .diagram-badge-yes {
+    position: absolute; top: -0.7rem; left: 50%;
+    transform: translateX(-50%);
+    padding: 0.2rem 1rem;
+    font-family: var(--font-sans); font-size: 0.55rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .diagram-badge-no {
+    background: var(--c-bg); color: var(--c-text-light);
+    border: 1px solid var(--c-sand);
+  }
+  .diagram-badge-yes {
+    background: var(--c-accent); color: #fff;
+  }
+  .diagram-house {
+    width: 100%; max-width: 180px; margin: 0 auto 1.5rem;
+  }
+  .diagram-floor {
+    padding: 1rem 0; text-align: center;
+    font-family: var(--font-jp); font-size: 0.7rem;
+    font-weight: 400; letter-spacing: 0.08em;
+  }
+  .diagram-roof {
+    width: 0; height: 0; margin: 0 auto;
+    border-left: 90px solid transparent;
+    border-right: 90px solid transparent;
+  }
+  .diagram-roof-gray { border-bottom: 45px solid var(--c-sand); }
+  .diagram-roof-green { border-bottom: 45px solid var(--c-accent); }
+  .floor-log {
+    background: var(--c-accent); color: #fff;
+  }
+  .floor-frame {
+    background: var(--c-sand); color: var(--c-text-light);
+  }
+  .diagram-label {
+    font-family: var(--font-jp); font-size: 0.82rem;
+    font-weight: 400; color: var(--c-forest);
+    letter-spacing: 0.05em; margin-bottom: 0.5rem;
+  }
+  .diagram-desc {
+    font-family: var(--font-jp); font-size: 0.75rem;
+    font-weight: 300; color: var(--c-text-light);
+    line-height: 1.8; letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 600px) {
+    .diagram-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .diagram-house { max-width: 160px; }
+    .diagram-roof {
+      border-left-width: 80px; border-right-width: 80px;
+    }
+    .diagram-roof-gray { border-bottom-width: 40px; }
+    .diagram-roof-green { border-bottom-width: 40px; }
+  }
+
   /* STORY BLOCK (image + text) */
   .story-block {
     display: grid; grid-template-columns: 280px 1fr;
@@ -420,6 +494,42 @@
   <p class="hero-title-jp">なぜ、総ログでなければならないのか。</p>
   <div class="hero-intro">
     <p>ログハウスの安心・安全・快適は、分厚いログ壁が家全体を包み込むことではじめて実現する。一階だけログで、二階は別の工法——それではログハウスの本質は届かない。TALOが「総ログ」に拘る理由を、技術で裏付ける。</p>
+  </div>
+</section>
+
+<!-- SECTION 0: WHAT IS LOG ON LOG -->
+<section class="section-warm">
+  <div class="section-inner" style="max-width:860px;">
+    <div class="section-label reveal">What is Log on Log</div>
+    <h2 class="section-heading reveal reveal-delay-1">「総ログ」とは何か。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">ログハウスとは、丸太（ログ）を水平に積み上げて壁をつくる建築工法である。しかし、すべてのログハウスが同じではない。</p>
+      <p class="reveal reveal-delay-2">多くのログハウスメーカーは、1階部分だけをログ壁で積み、2階は一般的な木造軸組工法やパネル工法で仕上げる。コストを抑え、施工を簡易にするためである。外観はログハウスに見えるが、2階に住む家族はログハウスの恩恵を受けられない。</p>
+      <p class="reveal reveal-delay-2">「総ログ」とは、1階から2階まで、すべての外壁をログで積み上げる構法のことである。TALOはこれを「Log on Log」と呼ぶ。ログの上にログを積む。屋根の下まで、一切の妥協なく。</p>
+    </div>
+
+    <div class="diagram-grid reveal reveal-delay-2">
+      <div class="diagram-card diagram-card-no">
+        <div class="diagram-badge-no">一般的なログハウス</div>
+        <div class="diagram-house">
+          <div class="diagram-roof diagram-roof-gray"></div>
+          <div class="diagram-floor floor-frame">2F：軸組工法</div>
+          <div class="diagram-floor floor-log">1F：ログ壁</div>
+        </div>
+        <div class="diagram-label">1階のみログ</div>
+        <div class="diagram-desc">2階は一般工法。ログハウスの性能が家全体に届かない。</div>
+      </div>
+      <div class="diagram-card diagram-card-yes">
+        <div class="diagram-badge-yes">TALO — Log on Log</div>
+        <div class="diagram-house">
+          <div class="diagram-roof diagram-roof-green"></div>
+          <div class="diagram-floor floor-log">2F：ログ壁</div>
+          <div class="diagram-floor floor-log">1F：ログ壁</div>
+        </div>
+        <div class="diagram-label">総ログ</div>
+        <div class="diagram-desc">1階から2階まで全面ログ壁。耐震・耐火・調湿・蓄熱のすべてが家全体で機能する。</div>
+      </div>
+    </div>
   </div>
 </section>
 
