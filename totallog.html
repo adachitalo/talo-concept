@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TALO — 総ログの技術</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #F6F3EE;
+    --c-bg-warm: #EDE8E0;
+    --c-dark: #2A2A24;
+    --c-forest: #3C4A35;
+    --c-forest-light: #5B6B52;
+    --c-wood: #8B7355;
+    --c-wood-light: #A89478;
+    --c-cream: #FAF8F4;
+    --c-sand: #D4CCBE;
+    --c-text: #3A3A34;
+    --c-text-light: #7A7A70;
+    --c-accent: #6B7F5E;
+    --c-red: #8B4D3B;
+    --c-blue: #4A6B7A;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-jp: 'Noto Serif JP', serif;
+    --font-sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-family: var(--font-jp);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.5s ease, backdrop-filter 0.5s ease;
+  }
+  nav.scrolled {
+    background: rgba(246, 243, 238, 0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  }
+  .nav-logo {
+    font-family: var(--font-sans); font-weight: 500;
+    font-size: 0.85rem; letter-spacing: 0.35em;
+    color: var(--c-forest); text-transform: uppercase;
+  }
+  .nav-back {
+    font-family: var(--font-jp); font-size: 0.75rem;
+    color: var(--c-wood-light); text-decoration: none;
+    letter-spacing: 0.05em; transition: color 0.3s;
+  }
+  .nav-back:hover { color: var(--c-forest); }
+
+  /* HERO */
+  .hero {
+    min-height: 70vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; padding: 8rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -20%; left: -20%; width: 140%; height: 140%;
+    background: radial-gradient(ellipse at 40% 50%, rgba(60, 74, 53, 0.06) 0%, transparent 60%);
+  }
+  .hero-label {
+    font-family: var(--font-sans); font-size: 0.65rem;
+    letter-spacing: 0.5em; text-transform: uppercase;
+    color: var(--c-accent); margin-bottom: 2rem;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 1s ease 0.3s forwards; position: relative;
+  }
+  .hero-title-en {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 300; letter-spacing: 0.12em;
+    color: var(--c-forest); line-height: 1.15; margin-bottom: 0.5rem;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 1.2s ease 0.5s forwards; position: relative;
+  }
+  .hero-title-jp {
+    font-family: var(--font-jp);
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 300; color: var(--c-wood);
+    letter-spacing: 0.2em; margin-bottom: 3rem;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 1.2s ease 0.7s forwards; position: relative;
+  }
+  .hero-intro {
+    max-width: 640px; position: relative;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 1.2s ease 0.9s forwards;
+  }
+  .hero-intro p {
+    font-family: var(--font-jp); font-size: 0.9rem;
+    font-weight: 300; color: var(--c-text-light);
+    line-height: 2.2; letter-spacing: 0.04em;
+  }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTIONS */
+  section { padding: 7rem 2rem; position: relative; }
+  .section-inner { max-width: 780px; margin: 0 auto; }
+
+  .section-label {
+    font-family: var(--font-sans); font-size: 0.6rem;
+    letter-spacing: 0.5em; text-transform: uppercase;
+    color: var(--c-accent); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 1.2rem;
+  }
+  .section-label::before {
+    content: ''; width: 35px; height: 1px; background: var(--c-accent);
+  }
+
+  .section-heading {
+    font-family: var(--font-jp);
+    font-size: clamp(1.5rem, 2.8vw, 2rem);
+    font-weight: 400; color: var(--c-forest);
+    letter-spacing: 0.08em; line-height: 1.6; margin-bottom: 2.5rem;
+  }
+
+  .section-body p {
+    font-family: var(--font-jp); font-size: 0.9rem;
+    font-weight: 300; color: var(--c-text);
+    line-height: 2.2; letter-spacing: 0.04em; margin-bottom: 1.5rem;
+  }
+  .section-body p:last-child { margin-bottom: 0; }
+
+  /* DARK SECTION */
+  .section-dark {
+    background: var(--c-forest); color: var(--c-cream);
+    position: relative; overflow: hidden;
+  }
+  .section-dark::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(139, 115, 85, 0.12) 0%, transparent 60%);
+  }
+  .section-dark .section-label { color: var(--c-wood-light); }
+  .section-dark .section-label::before { background: var(--c-wood-light); }
+  .section-dark .section-heading { color: var(--c-cream); }
+  .section-dark .section-body p { color: rgba(250, 248, 244, 0.8); }
+
+  /* WARM SECTION */
+  .section-warm { background: var(--c-bg-warm); }
+
+  /* CREAM SECTION */
+  .section-cream { background: var(--c-cream); }
+
+  /* EVIDENCE BOX */
+  .evidence-box {
+    margin-top: 2.5rem; padding: 2rem 2.5rem;
+    background: var(--c-cream); border-left: 2px solid var(--c-accent);
+    position: relative;
+  }
+  .evidence-title {
+    font-family: var(--font-sans); font-size: 0.6rem;
+    letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--c-accent); margin-bottom: 1rem;
+  }
+  .evidence-box p {
+    font-family: var(--font-jp); font-size: 0.85rem;
+    font-weight: 300; color: var(--c-forest);
+    line-height: 2; letter-spacing: 0.03em; margin-bottom: 0.8rem;
+  }
+  .evidence-box p:last-child { margin-bottom: 0; }
+
+  /* Dark evidence */
+  .section-dark .evidence-box {
+    background: rgba(250, 248, 244, 0.08);
+    border-left-color: var(--c-wood-light);
+  }
+  .section-dark .evidence-title { color: var(--c-wood-light); }
+  .section-dark .evidence-box p { color: rgba(250, 248, 244, 0.75); }
+
+  /* STAT GRID */
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2rem; margin-top: 3rem;
+  }
+  .stat-card {
+    text-align: center; padding: 2rem 1rem;
+    border-top: 1px solid rgba(250, 248, 244, 0.15);
+  }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 300; color: var(--c-cream); line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-unit {
+    font-family: var(--font-jp); font-size: 0.7rem;
+    font-weight: 300; color: var(--c-wood-light);
+    letter-spacing: 0.1em; margin-bottom: 0.8rem;
+  }
+  .stat-desc {
+    font-family: var(--font-jp); font-size: 0.75rem;
+    font-weight: 300; color: rgba(250, 248, 244, 0.5);
+    line-height: 1.8; letter-spacing: 0.02em;
+  }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%; border-collapse: collapse; margin-top: 2rem;
+  }
+  .compare-table th, .compare-table td {
+    padding: 1rem 1.2rem; text-align: left;
+    font-family: var(--font-jp); font-size: 0.82rem;
+    font-weight: 300; color: var(--c-text);
+    border-bottom: 1px solid var(--c-sand);
+    line-height: 1.8;
+  }
+  .compare-table th {
+    font-weight: 500; font-size: 0.75rem;
+    color: var(--c-forest); letter-spacing: 0.05em;
+    background: var(--c-bg-warm);
+  }
+  .compare-table td:first-child {
+    font-weight: 400; color: var(--c-forest);
+    white-space: nowrap;
+  }
+  .compare-table .highlight-cell {
+    color: var(--c-forest); font-weight: 400;
+    background: rgba(107, 127, 94, 0.06);
+  }
+
+  /* ACCENT QUOTE */
+  .accent-quote {
+    padding: 5rem 2rem; text-align: center;
+    position: relative; background: var(--c-forest);
+  }
+  .accent-quote::before, .accent-quote::after {
+    content: ''; position: absolute; left: 50%;
+    transform: translateX(-50%); width: 1px; height: 50px;
+  }
+  .accent-quote::before { top: 0; background: linear-gradient(to bottom, transparent, rgba(168,148,120,0.3)); }
+  .accent-quote::after { bottom: 0; background: linear-gradient(to top, transparent, rgba(168,148,120,0.3)); }
+  .accent-text {
+    font-family: var(--font-jp);
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    font-weight: 300; color: var(--c-cream);
+    letter-spacing: 0.18em; line-height: 2;
+  }
+
+  /* TALO SPECIFIC */
+  .talo-badge {
+    display: inline-block; padding: 0.3rem 0.8rem;
+    background: rgba(107, 127, 94, 0.12);
+    border: 1px solid rgba(107, 127, 94, 0.25);
+    border-radius: 2px;
+    font-family: var(--font-sans); font-size: 0.55rem;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--c-accent); margin-bottom: 1.5rem;
+  }
+  .section-dark .talo-badge {
+    background: rgba(168, 148, 120, 0.15);
+    border-color: rgba(168, 148, 120, 0.3);
+    color: var(--c-wood-light);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem; text-align: center; background: var(--c-forest);
+  }
+  .footer-logo {
+    font-family: var(--font-sans); font-size: 0.75rem;
+    letter-spacing: 0.4em; color: rgba(250, 248, 244, 0.5);
+    text-transform: uppercase;
+  }
+  .footer-sub {
+    font-family: var(--font-display); font-size: 0.85rem;
+    font-style: italic; color: rgba(250, 248, 244, 0.3); margin-top: 0.5rem;
+  }
+
+  /* REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(35px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    section { padding: 5rem 2rem; }
+    .section-inner { max-width: 680px; }
+    .stat-grid { gap: 1.5rem; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    section { padding: 4.5rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 3rem; min-height: 60vh; }
+    .stat-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .stat-card { padding: 1.5rem 1rem; display: flex; align-items: center; gap: 1.5rem; text-align: left; }
+    .stat-number { margin-bottom: 0; font-size: 2.5rem; }
+    .compare-table { font-size: 0.78rem; }
+    .compare-table th, .compare-table td { padding: 0.8rem; }
+    .evidence-box { padding: 1.5rem; }
+    .accent-quote { padding: 4rem 1.5rem; }
+    footer { padding: 2.5rem 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    nav { padding: 0.8rem 1rem; }
+    .nav-logo { font-size: 0.75rem; }
+    section { padding: 3.5rem 1.2rem; }
+    .hero { padding: 5rem 1.2rem 2.5rem; }
+    .hero-intro p { font-size: 0.82rem; }
+    .section-heading { font-size: 1.3rem; margin-bottom: 2rem; }
+    .section-body p { font-size: 0.82rem; }
+    .evidence-box { padding: 1.2rem; margin-top: 2rem; }
+    .evidence-box p { font-size: 0.78rem; }
+    .compare-table th, .compare-table td { padding: 0.6rem 0.5rem; font-size: 0.72rem; }
+    .accent-quote { padding: 3rem 1.2rem; }
+    .accent-text { font-size: 1rem; letter-spacing: 0.1em; }
+    footer { padding: 2rem 1rem; }
+  }
+  @supports (min-height: 100svh) { .hero { min-height: 70svh; } }
+  @media (hover: hover) { .nav-back:hover { color: var(--c-forest); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .hero-label, .hero-title-en, .hero-title-jp, .hero-intro { opacity: 1; transform: none; }
+    .reveal { opacity: 1; transform: none; }
+  }
+  @media print {
+    nav { display: none; }
+    body::after { display: none; }
+    .hero { min-height: auto; padding: 2rem; }
+    section { padding: 2rem; }
+    .section-dark { background: #fff; color: #333; }
+    .section-dark .section-heading { color: #333; }
+    .section-dark .section-body p { color: #555; }
+    .accent-quote { background: #f5f5f5; }
+    .accent-text { color: #333; }
+    .stat-number { color: #333; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-logo">TALO</div>
+  <a href="#" class="nav-back">&larr; Concept に戻る</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Total Log Technology</div>
+  <h1 class="hero-title-en">WHY TOTAL LOG</h1>
+  <p class="hero-title-jp">なぜ、総ログでなければならないのか。</p>
+  <div class="hero-intro">
+    <p>ログハウスの安心・安全・快適は、分厚いログ壁が家全体を包み込むことではじめて実現する。一階だけログで、二階は別の工法——それではログハウスの本質は届かない。TALOが「総ログ」に拘る理由を、技術で裏付ける。</p>
+  </div>
+</section>
+
+<!-- SECTION 1: SEISMIC -->
+<section class="section-dark">
+  <div class="section-inner" style="max-width:860px;">
+    <div class="section-label reveal">Seismic Resistance</div>
+    <h2 class="section-heading reveal reveal-delay-1">地震に、倒れない。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">日本は世界のM6以上の地震の約20%が集中する地震大国である。ログハウスは、この国で住まいに求められる最も根本的な要件——耐震性において、際立った強さを持つ。</p>
+      <p class="reveal reveal-delay-2">ログ壁は丸太を横に積み、一本一本をダボで接合して組み上げる。地震が発生すると、ログ同士の摩擦力が揺れのエネルギーを吸収し、建物全体がしなやかに変形して力を逃がす。これは一般住宅に後付けする「制震装置」と同じ原理が、構造そのものに組み込まれているということである。</p>
+      <p class="reveal reveal-delay-2">さらに、一般住宅の3〜5倍の木材を使用するログハウスは重心が低く、揺れに対して本質的に安定している。</p>
+    </div>
+
+    <div class="stat-grid reveal reveal-delay-2">
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div>
+          <div class="stat-unit">耐震等級</div>
+          <div class="stat-desc">住宅性能表示の最高等級。建築基準法の1.5倍の耐震力</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">0</div>
+        <div>
+          <div class="stat-unit">倒壊棟数</div>
+          <div class="stat-desc">阪神淡路・中越・東日本・熊本。大震災でログハウスの倒壊報告なし</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1.5×</div>
+        <div>
+          <div class="stat-unit">実大実験</div>
+          <div class="stat-desc">阪神淡路大震災の1.5倍の揺れにも倒壊せず</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="evidence-box reveal reveal-delay-3">
+      <div class="evidence-title">実証データ</div>
+      <p>2007年、日本ログハウス協会が世界初の実物大ログハウス振動実験を実施。阪神淡路大震災と同等の揺れ（震度7・M7.3）を与えた結果、建物の傾きは数mm、亀裂は数箇所のみ。さらに1.5倍の巨大地震波でも倒壊は見られなかった。</p>
+    </div>
+  </div>
+</section>
+
+<!-- TALO SPECIFIC: SEISMIC -->
+<section>
+  <div class="section-inner">
+    <div class="talo-badge reveal">TALO's Advantage</div>
+    <h2 class="section-heading reveal reveal-delay-1">TALOの総ログが耐震性を最大化する理由</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">2016年の熊本地震。各地に甚大な被害が発生する中、熊本県南阿蘇町に建つTALOログハウスは、内外ともに目に見える損傷がほとんどなかった。2階のミニチュアカーコレクションがわずかにずれた程度である。</p>
+      <p class="reveal reveal-delay-2">この建物の直下率は80%を超えていた。2階までログを積む総ログ構造は上下階ともに壁式構造となるため、直下率が自然に高くなる。つまり、TALOがこだわってきた総ログ構造は、ログハウスの耐震性能を最大限に発揮する構造なのである。</p>
+      <p class="reveal reveal-delay-2">加えてTALOは、より開放的な空間を実現するため、ノッチの代わりにログ壁を補強する独自の「サポートコラム」を開発し、特許を取得。間取りの自由度を高めつつ、構造上の強度を担保している。</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: FIRE -->
+<section class="section-cream">
+  <div class="section-inner">
+    <div class="section-label reveal">Fire Resistance</div>
+    <h2 class="section-heading reveal reveal-delay-1">火災で、家族を守る。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">「木は燃えやすい」——これは誤解である。太い木材は燃えにくい。</p>
+      <p class="reveal reveal-delay-2">木材が燃焼すると、表面に炭素の層が形成される。この炭化層が酸素の供給を遮断し、内部への延焼を自ら食い止める。分厚いログ材の場合、燃焼が芯まで達する前に消えてしまうことが多い。逆に鉄やアルミニウムは熱で急激に軟化し、強度を失う。</p>
+      <p class="reveal reveal-delay-2">さらに重要なのは、有害ガスの問題である。火災による死因の多くは焼死ではなく、煙と有害ガスによる中毒死である。合板や接着剤、新建材を多用する一般住宅とは異なり、無垢材で構成されるログハウスは有害ガスの発生を大幅に抑える。</p>
+    </div>
+    <div class="evidence-box reveal reveal-delay-2">
+      <div class="evidence-title">認定実績</div>
+      <p>日本ログハウス協会による耐火実験でログ材の難燃性が実証され、2002年に国土交通大臣より防耐火認定を取得。これにより、一定の基準を満たせば防火地域を除くほとんどの市街地でログハウスの建築が可能になった。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACCENT QUOTE -->
+<div class="accent-quote">
+  <p class="accent-text reveal">家が、家族を守る。<br>それが住まいの最も原始的な役割である。</p>
+</div>
+
+<!-- SECTION 3: HUMIDITY -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">Humidity Control</div>
+    <h2 class="section-heading reveal reveal-delay-1">日本の四季に、木が応える。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">日本の住環境における最大の敵は、湿度である。夏は湿度80%を超える高温多湿、冬は太平洋側で30%を下回る極端な乾燥。この年間50%以上の湿度差は、北欧にもヨーロッパにもない日本固有の課題である。</p>
+      <p class="reveal reveal-delay-2">湿度が高すぎればカビ・ダニが繁殖し、アレルギーや喘息の原因になる。低すぎれば粘膜が乾燥し、ウイルスに感染しやすくなる。さらに壁内結露は、目に見えないところで構造材を腐朽させ、建物の寿命を著しく縮める。日本の木造住宅の寿命が30年程度と言われる一因がここにある。</p>
+      <p class="reveal reveal-delay-2">無垢の木は、湿度が高ければ水分を吸い、乾燥すれば放出する。しかもログハウスは合板や防湿シートで壁を密閉しないから、壁内結露が起きにくい。機械に頼らず、素材そのものが四季の湿度変化に対応する——これが「呼吸する家」の実体である。</p>
+    </div>
+
+    <table class="compare-table reveal reveal-delay-2">
+      <thead>
+        <tr>
+          <th></th>
+          <th>ログハウス（総ログ）</th>
+          <th>一般木造住宅</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>壁の調湿</td>
+          <td class="highlight-cell">無垢材が自然に吸放湿</td>
+          <td>ビニールクロス＋防湿シートで遮断</td>
+        </tr>
+        <tr>
+          <td>壁内結露</td>
+          <td class="highlight-cell">構造上、起きにくい</td>
+          <td>発生リスクあり（構造材の腐朽原因）</td>
+        </tr>
+        <tr>
+          <td>室内湿度</td>
+          <td class="highlight-cell">約50〜60%を自然維持</td>
+          <td>機械（加湿器・除湿器）に依存</td>
+        </tr>
+        <tr>
+          <td>化学物質</td>
+          <td class="highlight-cell">ゼロ（合板・接着剤不使用）</td>
+          <td>合板・接着剤を広範に使用</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="evidence-box reveal reveal-delay-2">
+      <div class="evidence-title">科学的裏付け</div>
+      <p>研究データによれば、厚さ4mm・1㎡のヒノキ板が吸収できる水分量は、8畳の部屋（25℃）の飽和水蒸気量に相当する。総ログの壁は厚さ100mm以上の無垢材が四面を囲むため、この調湿能力は桁違いに大きい。室内湿度50%は、空中浮遊菌の大半が死滅するとされる数値でもある。</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: THERMAL -->
+<section class="section-warm">
+  <div class="section-inner">
+    <div class="section-label reveal">Thermal Performance</div>
+    <h2 class="section-heading reveal reveal-delay-1">蓄熱する壁。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">断熱と蓄熱は異なる。断熱は熱の移動を「遮る」こと。蓄熱は熱を「溜めて、ゆっくり放出する」ことである。</p>
+      <p class="reveal reveal-delay-2">分厚いログ壁は、昼間の太陽熱や暖房の熱をゆっくりと吸収し、夜間にじわじわと放出する。このため、ログハウスの室温は一日を通じて安定する。冬の朝、暖房を入れる前から感じるほのかな暖かさ。夏、帰宅したときのひんやりとした空気。これが蓄熱の効果である。</p>
+      <p class="reveal reveal-delay-2">現代の高断熱住宅は薄い壁に断熱材を詰め込む。熱は遮れても溜められない。総ログの壁は「遮る」と「溜める」を一枚の壁で同時に実現する。</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: DURABILITY -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">Durability</div>
+    <h2 class="section-heading reveal reveal-delay-1">木は、時を経て強くなる。</h2>
+    <div class="section-body">
+      <p class="reveal reveal-delay-2">日本最古の木造建築である法隆寺は607年、ログハウスの原型である正倉院は759年に建てられた。1000年以上を経てなお現存する事実が、木という素材の耐久性を証明している。</p>
+      <p class="reveal reveal-delay-2">木は伐採後、時間の経過とともに強度が増す。ヒノキは伐採後200年間、強度が上がり続けるとされる。新建材は完成した瞬間が最も美しく、以後は劣化していく。無垢の木はその逆である。</p>
+      <p class="reveal reveal-delay-2">木が腐る原因は、過度な水分、酸素、温度、栄養の四要素が揃ったときに活動する腐朽菌である。十分に乾燥した材を使用し、結露を防ぐ設計と適切なメンテナンスがあれば、ログハウスは100年、200年と住み継ぐことができる。</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="section-dark" style="padding: 6rem 2rem;">
+  <div class="section-inner" style="text-align:center;">
+    <h2 class="section-heading reveal" style="margin-bottom:2rem;">総ログとは、TALOのお客様への約束である。</h2>
+    <div class="section-body" style="max-width:600px; margin:0 auto;">
+      <p class="reveal reveal-delay-1" style="color:rgba(250,248,244,0.7);">地震から守る。火災から守る。日本の湿度から守る。そして、何十年経っても強くあり続ける。それは商品の差別化のためではない。この家に住む人の安心を、絶対に裏切らないという約束である。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">TALO International</div>
+  <div class="footer-sub">The Honest House — since 1988</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
