@@ -263,6 +263,49 @@
     letter-spacing: 0.18em; line-height: 2;
   }
 
+  /* STORY BLOCK (image + text) */
+  .story-block {
+    display: grid; grid-template-columns: 280px 1fr;
+    gap: 2.5rem; align-items: start;
+    margin-top: 3rem; padding: 2.5rem;
+    background: rgba(250, 248, 244, 0.06);
+    border: 1px solid rgba(250, 248, 244, 0.08);
+  }
+  .story-img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    filter: sepia(0.1) contrast(0.95);
+  }
+  .story-caption {
+    font-family: var(--font-jp); font-size: 0.65rem;
+    font-weight: 300; color: rgba(250, 248, 244, 0.4);
+    margin-top: 0.6rem; letter-spacing: 0.03em; line-height: 1.6;
+  }
+  .story-title {
+    font-family: var(--font-jp);
+    font-size: 1.05rem; font-weight: 500;
+    color: var(--c-cream); letter-spacing: 0.08em;
+    margin-bottom: 1.2rem; line-height: 1.6;
+  }
+  .story-text {
+    font-family: var(--font-jp); font-size: 0.82rem;
+    font-weight: 300; color: rgba(250, 248, 244, 0.7);
+    line-height: 2.1; letter-spacing: 0.03em;
+  }
+  .story-text + .story-text { margin-top: 1rem; }
+
+  @media (max-width: 768px) {
+    .story-block {
+      grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem;
+    }
+    .story-img { max-width: 240px; }
+  }
+  @media (max-width: 480px) {
+    .story-block { padding: 1.2rem; }
+    .story-img { max-width: 200px; }
+    .story-title { font-size: 0.95rem; }
+    .story-text { font-size: 0.78rem; }
+  }
+
   /* TALO SPECIFIC */
   .talo-badge {
     display: inline-block; padding: 0.3rem 0.8rem;
@@ -419,6 +462,19 @@
       <div class="evidence-title">実証データ</div>
       <p>2007年、日本ログハウス協会が世界初の実物大ログハウス振動実験を実施。阪神淡路大震災と同等の揺れ（震度7・M7.3）を与えた結果、建物の傾きは数mm、亀裂は数箇所のみ。さらに1.5倍の巨大地震波でも倒壊は見られなかった。</p>
     </div>
+
+    <div class="story-block reveal reveal-delay-3">
+      <div>
+        <img src="okushiri.jpg" alt="北海道南西沖地震後の奥尻島 TALOログハウスレストラン「波涛」" class="story-img">
+        <p class="story-caption">1993年 北海道南西沖地震後の奥尻島。電柱が倒壊する中、TALOログハウスは損傷なく建っている。</p>
+      </div>
+      <div>
+        <p class="story-title">1993年、奥尻島。<br>津波にも、倒れなかった。</p>
+        <p class="story-text">1993年7月、北海道奥尻島沖でM7.8の巨大地震が発生。直後に高さ21mの津波が島を襲い、大半の建物が全壊した。</p>
+        <p class="story-text">しかし、TALOログハウスレストラン「波涛」は、建物はおろか店内の食器やコップもほとんど損傷しなかった。大きな津波を受けてもログハウスの内部には一滴の水も入らず、家をなくした人たちの緊急避難所として使われた。</p>
+        <p class="story-text">このログハウスもTALOの特徴である木ダボ・妻面ログ積みで建築されている。ログを積み上げてダボと通しボルトで固定していく構造は、地震にも津波にも、粘り強く耐える。</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -446,8 +502,8 @@
       <p class="reveal reveal-delay-2">さらに重要なのは、有害ガスの問題である。火災による死因の多くは焼死ではなく、煙と有害ガスによる中毒死である。合板や接着剤、新建材を多用する一般住宅とは異なり、無垢材で構成されるログハウスは有害ガスの発生を大幅に抑える。</p>
     </div>
     <div class="evidence-box reveal reveal-delay-2">
-      <div class="evidence-title">認定実績</div>
-      <p>日本ログハウス協会による耐火実験でログ材の難燃性が実証され、2002年に国土交通大臣より防耐火認定を取得。これにより、一定の基準を満たせば防火地域を除くほとんどの市街地でログハウスの建築が可能になった。</p>
+      <div class="evidence-title">TALOの認定実績</div>
+      <p>TALOは独自に耐火実験を行い、ログハウスの耐火性能と安全性を実証。2001年に「30分耐火」認定、2004年に「45分耐火」認定、さらに2013年にはログハウス業界で最も薄い壁厚での「60分耐火」認定を取得した。これにより、一定規模までの住宅であれば防火地域においてもログ壁のままでの建設が可能になった。</p>
     </div>
   </div>
 </section>
