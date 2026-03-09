@@ -110,12 +110,10 @@
     margin-bottom: 2rem;
   }
   .hero-brand {
-    height: clamp(40px, 7vw, 70px);
-    margin-bottom: 1.5rem;
-  }
-  .hero-brand img {
-    height: 100%; width: auto; display: block;
-    margin: 0 auto;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 300; letter-spacing: 0.2em;
+    color: #fff; line-height: 1.1; margin-bottom: 0.8rem;
   }
   .hero-tagline {
     font-family: var(--font-jp);
@@ -453,6 +451,7 @@
   }
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
+    .nav-logo { height: 18px; }
     .nav-links { gap: 1.5rem; }
     .nav-links a { font-size: 0.6rem; }
     section { padding: 5rem 1.5rem; }
@@ -465,10 +464,10 @@
   }
   @media (max-width: 480px) {
     nav { padding: 0.8rem 1rem; }
-    .nav-logo { font-size: 0.85rem; letter-spacing: 0.25em; }
+    .nav-logo { height: 15px; }
     .nav-links { gap: 1rem; }
     .nav-links a { font-size: 0.55rem; letter-spacing: 0.15em; }
-    .hero-brand { height: clamp(35px, 6vw, 50px); }
+    .hero-brand { letter-spacing: 0.1em; }
     .hero-tagline { letter-spacing: 0.12em; }
     .concept-content, .logonlog-content { padding: 2.5rem 1.2rem; }
     .feature-card { padding: 2rem 1.5rem; }
@@ -516,8 +515,8 @@
     <div class="hero-slide"></div>
   </div>
   <div class="hero-overlay">
-    <div class="hero-brand"><img src="talo-logo-white.png" alt="TALO"></div>
-    <p class="hero-tagline">TERVE TALO — 健康な木の家</p>
+    <h1 class="hero-brand">TERVE TALO</h1>
+    <p class="hero-tagline">健康な木の家</p>
   </div>
   <div class="hero-scroll">
     <span>Scroll</span>
