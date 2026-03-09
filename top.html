@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TALO — ログハウスのTALO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #F6F3EE;
+    --c-bg-warm: #EDE8E0;
+    --c-dark: #2A2A24;
+    --c-forest: #3C4A35;
+    --c-forest-light: #5B6B52;
+    --c-wood: #8B7355;
+    --c-wood-light: #A89478;
+    --c-cream: #FAF8F4;
+    --c-sand: #D4CCBE;
+    --c-text: #3A3A34;
+    --c-text-light: #7A7A70;
+    --c-accent: #6B7F5E;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-jp: 'Noto Serif JP', serif;
+    --font-sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: var(--c-bg); color: var(--c-text);
+    font-family: var(--font-jp); overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::after {
+    content: ''; position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+  }
+
+  /* ═══════════════ NAV ═══════════════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.5s, backdrop-filter 0.5s;
+  }
+  nav.scrolled {
+    background: rgba(246,243,238,0.9);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  }
+  .nav-logo {
+    font-family: var(--font-sans); font-weight: 500;
+    font-size: 1rem; letter-spacing: 0.35em;
+    color: var(--c-forest); text-transform: uppercase;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--c-text-light); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--c-forest); }
+
+  /* ═══════════════ HERO ═══════════════ */
+  .hero {
+    height: 100vh; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-slides {
+    position: absolute; inset: 0;
+  }
+  .hero-slide {
+    position: absolute; inset: 0;
+    background: var(--c-sand);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 1.5s ease;
+  }
+  .hero-slide.active { opacity: 1; }
+  .hero-slide:nth-child(1) {
+    background: linear-gradient(135deg, #C4B8A6 0%, #A89478 50%, #8B7355 100%);
+  }
+  .hero-slide:nth-child(2) {
+    background: linear-gradient(135deg, #5B6B52 0%, #3C4A35 50%, #2A3A22 100%);
+  }
+  .hero-slide:nth-child(3) {
+    background: linear-gradient(135deg, #8B9B80 0%, #6B7F5E 50%, #4A5E42 100%);
+  }
+  .hero-placeholder {
+    font-family: var(--font-sans); font-size: 0.65rem;
+    letter-spacing: 0.4em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+  .hero-overlay {
+    position: relative; z-index: 2; text-align: center;
+    padding: 2rem;
+  }
+  .hero-mark {
+    width: 60px; height: 60px; object-fit: contain;
+    filter: brightness(10) saturate(0); opacity: 0.4;
+    margin-bottom: 2rem;
+  }
+  .hero-brand {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 300; letter-spacing: 0.2em;
+    color: #fff; line-height: 1.1; margin-bottom: 0.8rem;
+  }
+  .hero-tagline {
+    font-family: var(--font-jp);
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    font-weight: 200; color: rgba(255,255,255,0.7);
+    letter-spacing: 0.25em;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%); z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  }
+  .hero-scroll span {
+    font-family: var(--font-sans); font-size: 0.55rem;
+    letter-spacing: 0.3em; color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 40px; background: rgba(255,255,255,0.2);
+    position: relative; overflow: hidden;
+  }
+  .hero-scroll-line::after {
+    content: ''; position: absolute; top: -100%;
+    width: 100%; height: 100%; background: rgba(255,255,255,0.6);
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+  @keyframes scrollDown { 0% { top: -100%; } 100% { top: 100%; } }
+
+  /* Slide indicators */
+  .hero-indicators {
+    position: absolute; bottom: 2.5rem; right: 3rem; z-index: 2;
+    display: flex; gap: 0.6rem;
+  }
+  .hero-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.25); border: none; cursor: pointer;
+    transition: background 0.4s, transform 0.4s;
+  }
+  .hero-dot.active {
+    background: rgba(255,255,255,0.8); transform: scale(1.3);
+  }
+
+  /* ═══════════════ SECTIONS ═══════════════ */
+  section { padding: 8rem 2rem; position: relative; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-narrow { max-width: 700px; margin: 0 auto; }
+
+  .section-label {
+    font-family: var(--font-sans); font-size: 0.6rem;
+    letter-spacing: 0.5em; text-transform: uppercase;
+    color: var(--c-accent); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 1.2rem;
+  }
+  .section-label::before {
+    content: ''; width: 35px; height: 1px; background: var(--c-accent);
+  }
+
+  .section-heading {
+    font-family: var(--font-jp);
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+    font-weight: 400; color: var(--c-forest);
+    letter-spacing: 0.08em; line-height: 1.7; margin-bottom: 1.5rem;
+  }
+
+  .section-heading-en {
+    font-family: var(--font-display);
+    font-size: 0.85rem; font-weight: 400; font-style: italic;
+    color: var(--c-wood-light); letter-spacing: 0.1em;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-text {
+    font-family: var(--font-jp); font-size: 0.9rem;
+    font-weight: 300; color: var(--c-text);
+    line-height: 2.2; letter-spacing: 0.04em;
+  }
+
+  .section-link {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    margin-top: 2.5rem;
+    font-family: var(--font-sans); font-size: 0.7rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    text-decoration: none; color: var(--c-accent);
+    transition: gap 0.3s;
+  }
+  .section-link::after { content: '→'; transition: transform 0.3s; }
+  .section-link:hover { gap: 1.2rem; }
+  .section-link:hover::after { transform: translateX(4px); }
+
+  .section-link-light { color: var(--c-wood-light); }
+  .section-link-light:hover { color: var(--c-cream); }
+
+  /* ═══════════════ CONCEPT (About) ═══════════════ */
+  .concept-section {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: 80vh;
+  }
+  .concept-image {
+    background: linear-gradient(135deg, #B0A898 0%, #8B7F6F 100%);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 500px; position: relative; overflow: hidden;
+  }
+  .concept-image::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 70%, rgba(60,74,53,0.15) 0%, transparent 70%);
+  }
+  .concept-content {
+    display: flex; flex-direction: column;
+    justify-content: center; padding: 5rem 4rem;
+    background: var(--c-forest);
+  }
+  .concept-content .section-label { color: var(--c-wood-light); }
+  .concept-content .section-label::before { background: var(--c-wood-light); }
+  .concept-content .section-heading { color: var(--c-cream); margin-bottom: 0.8rem; }
+  .concept-content .section-heading-en { color: rgba(250,248,244,0.35); }
+  .concept-content .section-text {
+    color: rgba(250,248,244,0.7); margin-bottom: 0;
+  }
+  .concept-content .section-text + .section-text { margin-top: 1.2rem; }
+
+  /* ═══════════════ FEATURES GRID ═══════════════ */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin-top: 4rem;
+  }
+  .feature-card {
+    padding: 3rem 2.5rem; position: relative;
+    border-right: 1px solid var(--c-sand);
+    transition: background 0.4s;
+  }
+  .feature-card:last-child { border-right: none; }
+  .feature-card:hover { background: var(--c-cream); }
+  .feature-number {
+    font-family: var(--font-display); font-size: 2.5rem;
+    font-weight: 300; color: var(--c-sand); line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .feature-title {
+    font-family: var(--font-jp); font-size: 1rem;
+    font-weight: 500; color: var(--c-forest);
+    letter-spacing: 0.08em; margin-bottom: 1rem;
+  }
+  .feature-desc {
+    font-family: var(--font-jp); font-size: 0.8rem;
+    font-weight: 300; color: var(--c-text-light);
+    line-height: 2; letter-spacing: 0.03em;
+  }
+
+  /* ═══════════════ LOG ON LOG FEATURE ═══════════════ */
+  .logonlog-section {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: 70vh;
+  }
+  .logonlog-content {
+    display: flex; flex-direction: column;
+    justify-content: center; padding: 5rem 4rem;
+  }
+  .logonlog-image {
+    background: linear-gradient(160deg, #6B7F5E 0%, #3C4A35 60%, #2A3A22 100%);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 450px; position: relative;
+  }
+
+  /* ═══════════════ GALLERY ═══════════════ */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1rem; margin-top: 3rem;
+  }
+  .gallery-item {
+    position: relative; overflow: hidden;
+    background: var(--c-sand);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 280px; cursor: pointer;
+  }
+  .gallery-item::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(42,42,36,0); transition: background 0.4s;
+  }
+  .gallery-item:hover::after { background: rgba(42,42,36,0.3); }
+  .gallery-item-wide {
+    grid-column: span 2;
+    min-height: 360px;
+  }
+  .gallery-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.5rem 2rem; z-index: 2;
+    background: linear-gradient(to top, rgba(42,42,36,0.7), transparent);
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .gallery-item:hover .gallery-caption {
+    opacity: 1; transform: translateY(0);
+  }
+  .gallery-caption-title {
+    font-family: var(--font-jp); font-size: 0.85rem;
+    font-weight: 400; color: #fff; letter-spacing: 0.05em;
+  }
+  .gallery-caption-sub {
+    font-family: var(--font-sans); font-size: 0.6rem;
+    color: rgba(255,255,255,0.6); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-top: 0.3rem;
+  }
+
+  /* ═══════════════ NEWS ═══════════════ */
+  .news-list { margin-top: 2.5rem; }
+  .news-item {
+    display: flex; align-items: baseline; gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--c-sand);
+    text-decoration: none; color: inherit;
+    transition: padding-left 0.3s;
+  }
+  .news-item:hover { padding-left: 0.5rem; }
+  .news-date {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    color: var(--c-wood-light); letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+  .news-title-text {
+    font-family: var(--font-jp); font-size: 0.85rem;
+    font-weight: 300; color: var(--c-text);
+    line-height: 1.8; letter-spacing: 0.03em;
+  }
+
+  /* ═══════════════ CTA ═══════════════ */
+  .cta-section {
+    background: var(--c-forest); text-align: center;
+    padding: 6rem 2rem; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(139,115,85,0.1) 0%, transparent 70%);
+  }
+  .cta-heading {
+    font-family: var(--font-jp);
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 300; color: var(--c-cream);
+    letter-spacing: 0.15em; line-height: 2;
+    margin-bottom: 2.5rem; position: relative;
+  }
+  .cta-buttons {
+    display: flex; justify-content: center; gap: 1.5rem;
+    flex-wrap: wrap; position: relative;
+  }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    padding: 1rem 2.5rem;
+    font-family: var(--font-jp); font-size: 0.8rem;
+    letter-spacing: 0.15em; text-decoration: none;
+    transition: all 0.4s;
+  }
+  .cta-btn-primary {
+    background: var(--c-cream); color: var(--c-forest);
+    border: 1px solid var(--c-cream);
+  }
+  .cta-btn-primary:hover {
+    background: transparent; color: var(--c-cream);
+  }
+  .cta-btn-secondary {
+    background: transparent; color: var(--c-cream);
+    border: 1px solid rgba(250,248,244,0.3);
+  }
+  .cta-btn-secondary:hover {
+    border-color: var(--c-cream); background: rgba(250,248,244,0.08);
+  }
+
+  /* ═══════════════ FOOTER ═══════════════ */
+  footer {
+    padding: 4rem 3rem 3rem; background: var(--c-dark);
+    display: flex; justify-content: space-between; align-items: end;
+  }
+  .footer-left {}
+  .footer-logo-text {
+    font-family: var(--font-sans); font-size: 0.85rem;
+    letter-spacing: 0.35em; color: rgba(250,248,244,0.5);
+    text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .footer-tagline {
+    font-family: var(--font-display); font-size: 0.85rem;
+    font-style: italic; color: rgba(250,248,244,0.25);
+  }
+  .footer-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .footer-links a {
+    font-family: var(--font-sans); font-size: 0.65rem;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(250,248,244,0.3); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: rgba(250,248,244,0.7); }
+  .footer-copy {
+    font-family: var(--font-sans); font-size: 0.6rem;
+    color: rgba(250,248,244,0.2); margin-top: 2rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* ═══════════════ REVEAL ═══════════════ */
+  .reveal {
+    opacity: 0; transform: translateY(35px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* ═══════════════ PLACEHOLDER ═══════════════ */
+  .ph {
+    font-family: var(--font-sans); font-size: 0.6rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+  .ph-dark { color: rgba(42,42,36,0.2); }
+
+  /* ═══════════════ RESPONSIVE ═══════════════ */
+  @media (max-width: 1024px) {
+    .concept-section, .logonlog-section { grid-template-columns: 1fr; }
+    .concept-content, .logonlog-content { padding: 4rem 3rem; }
+    .features-grid { grid-template-columns: 1fr; gap: 0; }
+    .feature-card { border-right: none; border-bottom: 1px solid var(--c-sand); }
+    .feature-card:last-child { border-bottom: none; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item-wide { grid-column: span 2; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .nav-links a { font-size: 0.6rem; }
+    section { padding: 5rem 1.5rem; }
+    .concept-content, .logonlog-content { padding: 3rem 1.5rem; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item-wide { grid-column: span 1; }
+    .gallery-item { min-height: 220px; }
+    footer { flex-direction: column; align-items: flex-start; gap: 2rem; padding: 3rem 1.5rem; }
+    .hero-indicators { right: 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    nav { padding: 0.8rem 1rem; }
+    .nav-logo { font-size: 0.85rem; letter-spacing: 0.25em; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.55rem; letter-spacing: 0.15em; }
+    .hero-brand { letter-spacing: 0.1em; }
+    .hero-tagline { letter-spacing: 0.12em; }
+    .concept-content, .logonlog-content { padding: 2.5rem 1.2rem; }
+    .feature-card { padding: 2rem 1.5rem; }
+    .cta-section { padding: 4rem 1.2rem; }
+    .cta-buttons { flex-direction: column; align-items: center; }
+    .news-item { flex-direction: column; gap: 0.5rem; }
+    footer { padding: 2.5rem 1rem; }
+    .footer-links { flex-wrap: wrap; gap: 1rem; }
+  }
+  @supports (min-height: 100svh) { .hero { height: 100svh; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+  }
+  @media print {
+    nav, .hero-scroll, .hero-indicators { display: none; }
+    body::after { display: none; }
+    .hero { height: auto; min-height: 200px; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="/" class="nav-logo">TALO</a>
+  <ul class="nav-links">
+    <li><a href="concept.html">Concept</a></li>
+    <li><a href="#">Products</a></li>
+    <li><a href="#">Gallery</a></li>
+    <li><a href="#">News</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-slides">
+    <div class="hero-slide active">
+      <span class="ph">Photo 1 — ログハウス外観 全景</span>
+    </div>
+    <div class="hero-slide">
+      <span class="ph">Photo 2 — フィンランドの森・木材</span>
+    </div>
+    <div class="hero-slide">
+      <span class="ph">Photo 3 — ログハウス内観 リビング</span>
+    </div>
+  </div>
+  <div class="hero-overlay">
+    <img src="tervetalo-mark.png" alt="Terve Talo" class="hero-mark">
+    <h1 class="hero-brand">TALO</h1>
+    <p class="hero-tagline">Terve Talo — 健康な木の家</p>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+  <div class="hero-indicators">
+    <button class="hero-dot active" data-slide="0"></button>
+    <button class="hero-dot" data-slide="1"></button>
+    <button class="hero-dot" data-slide="2"></button>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<div class="concept-section">
+  <div class="concept-image">
+    <span class="ph">Photo — ログ壁のテクスチャ / 自然光</span>
+  </div>
+  <div class="concept-content">
+    <div class="section-label reveal">Concept</div>
+    <h2 class="section-heading reveal reveal-delay-1">建物は環境の一部であり、<br>人間は自然の一部である。</h2>
+    <p class="section-heading-en reveal reveal-delay-1">Terve Talo — since 1988</p>
+    <p class="section-text reveal reveal-delay-2">フィンランドで建築家として活動していた創業者が、一つの確信を持ってTALOを設立した。北欧の知恵を日本の風土に根づかせれば、理想の住まいになる。</p>
+    <p class="section-text reveal reveal-delay-2">以来35年以上、4700棟を超えるログハウスを一棟一棟、日本各地の風土に合わせて建ててきた。</p>
+    <a href="concept.html" class="section-link section-link-light reveal reveal-delay-3">コンセプトを見る</a>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section style="padding: 0;">
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-number">01</div>
+      <div class="feature-title">自由設計</div>
+      <div class="feature-desc">画一的なプランではなく、土地・気候・ライフスタイルに合わせた一棟を、設計力と技術力でかたちにする。</div>
+    </div>
+    <div class="feature-card reveal reveal-delay-1">
+      <div class="feature-number">02</div>
+      <div class="feature-title">天然素材</div>
+      <div class="feature-desc">合板ゼロ、化学物質ゼロ。無垢材と自然素材に徹底的にこだわった家造り。家そのものが呼吸する。</div>
+    </div>
+    <div class="feature-card reveal reveal-delay-2">
+      <div class="feature-number">03</div>
+      <div class="feature-title">総ログ</div>
+      <div class="feature-desc">1階から2階まで、すべてをログで積む。耐震・耐火・調湿・蓄熱。ログハウスの性能を家全体で発揮する。</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOG ON LOG -->
+<div class="logonlog-section">
+  <div class="logonlog-content">
+    <div class="section-label reveal">LOG on LOG</div>
+    <h2 class="section-heading reveal reveal-delay-1">その家、<br>あなたを守ってくれますか？</h2>
+    <p class="section-heading-en reveal reveal-delay-1">Total Log Technology</p>
+    <p class="section-text reveal reveal-delay-2">ログの上にログを積む。屋根の下まで、一切の妥協なく。TALOが35年以上こだわり続けてきた「総ログ」の技術を、データと実績で裏付ける。</p>
+    <a href="totallog.html" class="section-link reveal reveal-delay-3">総ログについて詳しく見る</a>
+  </div>
+  <div class="logonlog-image">
+    <span class="ph">Photo — 総ログ構造 / 施工中の風景</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">Gallery</div>
+    <h2 class="section-heading reveal reveal-delay-1">TALOの実例</h2>
+    <p class="section-heading-en reveal reveal-delay-1">4700 houses, each one unique</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-item gallery-item-wide reveal">
+        <span class="ph-dark">Photo — 施工事例 1（大型）</span>
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">自然と暮らす山荘</div>
+          <div class="gallery-caption-sub">Nagano</div>
+        </div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-1">
+        <span class="ph-dark">Photo — 施工事例 2</span>
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">都市型ログハウス</div>
+          <div class="gallery-caption-sub">Tokyo</div>
+        </div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-1">
+        <span class="ph-dark">Photo — 施工事例 3</span>
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">海辺の別荘</div>
+          <div class="gallery-caption-sub">Chiba</div>
+        </div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-2">
+        <span class="ph-dark">Photo — 施工事例 4</span>
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">薪ストーブのある暮らし</div>
+          <div class="gallery-caption-sub">Yamanashi</div>
+        </div>
+      </div>
+      <div class="gallery-item gallery-item-wide reveal reveal-delay-2">
+        <span class="ph-dark">Photo — 施工事例 5（大型）</span>
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">フィンランドデザインの住まい</div>
+          <div class="gallery-caption-sub">Hokkaido</div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" class="section-link reveal" style="margin-top:3rem;">すべての実例を見る</a>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="section-warm" style="padding: 6rem 2rem;">
+  <div class="section-narrow">
+    <div class="section-label reveal">News &amp; Events</div>
+    <h2 class="section-heading reveal reveal-delay-1">お知らせ</h2>
+
+    <div class="news-list">
+      <a href="#" class="news-item reveal">
+        <span class="news-date">2026.03.09</span>
+        <span class="news-title-text">ログハウスキット価格 最大20%OFF！ 2026年6月30日まで</span>
+      </a>
+      <a href="#" class="news-item reveal reveal-delay-1">
+        <span class="news-date">2026.03.01</span>
+        <span class="news-title-text">ログハウス予約制構造見学会 山梨県北杜市</span>
+      </a>
+      <a href="#" class="news-item reveal reveal-delay-2">
+        <span class="news-date">2026.02.15</span>
+        <span class="news-title-text">新モデル「Kukka」コンパクトログハウス発売</span>
+      </a>
+    </div>
+
+    <a href="#" class="section-link reveal" style="margin-top:2rem;">すべてのお知らせ</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <p class="cta-heading reveal">ログハウスの暮らしに興味がありますか？<br>まずは資料をお手元に。</p>
+  <div class="cta-buttons">
+    <a href="#" class="cta-btn cta-btn-primary reveal reveal-delay-1">資料請求</a>
+    <a href="#" class="cta-btn cta-btn-secondary reveal reveal-delay-2">お問い合わせ</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo-text">TALO International</div>
+    <div class="footer-tagline">Terve Talo — since 1988</div>
+    <p class="footer-copy">&copy; 2007-2026 TALO. All Rights Reserved.</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="concept.html">Concept</a></li>
+    <li><a href="totallog.html">LOG on LOG</a></li>
+    <li><a href="#">Products</a></li>
+    <li><a href="#">Gallery</a></li>
+    <li><a href="#">Company</a></li>
+    <li><a href="#">Privacy</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Hero slideshow
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  let current = 0;
+  let interval;
+
+  function showSlide(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    current = n;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function nextSlide() {
+    showSlide((current + 1) % slides.length);
+  }
+
+  function startSlideshow() {
+    interval = setInterval(nextSlide, 5000);
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      clearInterval(interval);
+      showSlide(parseInt(dot.dataset.slide));
+      startSlideshow();
+    });
+  });
+
+  startSlideshow();
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
