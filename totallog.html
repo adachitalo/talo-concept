@@ -59,9 +59,10 @@
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   }
   .nav-logo {
-    font-family: var(--font-sans); font-weight: 500;
-    font-size: 0.85rem; letter-spacing: 0.35em;
-    color: var(--c-forest); text-transform: uppercase;
+    display: block; height: 22px;
+  }
+  .nav-logo img {
+    height: 100%; width: auto; display: block;
   }
   .nav-back {
     font-family: var(--font-jp); font-size: 0.75rem;
@@ -401,9 +402,11 @@
     padding: 3rem; text-align: center; background: var(--c-forest);
   }
   .footer-logo {
-    font-family: var(--font-sans); font-size: 0.75rem;
-    letter-spacing: 0.4em; color: rgba(250, 248, 244, 0.5);
-    text-transform: uppercase;
+    height: 16px; margin-bottom: 0.3rem;
+  }
+  .footer-logo img {
+    height: 100%; width: auto; display: block;
+    opacity: 0.5;
   }
   .footer-sub {
     font-family: var(--font-display); font-size: 0.85rem;
@@ -428,6 +431,7 @@
   }
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
+    .nav-logo { height: 18px; }
     section { padding: 4.5rem 1.5rem; }
     .hero { padding: 6rem 1.5rem 3rem; min-height: 60vh; }
     .stat-grid { grid-template-columns: 1fr; gap: 1rem; }
@@ -441,7 +445,7 @@
   }
   @media (max-width: 480px) {
     nav { padding: 0.8rem 1rem; }
-    .nav-logo { font-size: 0.75rem; }
+    .nav-logo { height: 15px; }
     section { padding: 3.5rem 1.2rem; }
     .hero { padding: 5rem 1.2rem 2.5rem; }
     .hero-intro p { font-size: 0.82rem; }
@@ -483,7 +487,7 @@
 <body>
 
 <nav id="nav">
-  <div class="nav-logo">TALO</div>
+  <a href="top.html" class="nav-logo"><img src="talo-logo-green.png" alt="TALO"></a>
   <a href="index.html" class="nav-back">&larr; Concept に戻る</a>
 </nav>
 
@@ -723,7 +727,7 @@
 </section>
 
 <footer>
-  <div class="footer-logo">TALO International</div>
+  <div class="footer-logo"><img src="talo-logo-white.png" alt="TALO"></div>
   <div class="footer-sub">Terve Talo — since 1988</div>
 </footer>
 
