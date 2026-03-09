@@ -78,19 +78,18 @@
   }
   .hero-slide {
     position: absolute; inset: 0;
-    background: var(--c-sand);
-    display: flex; align-items: center; justify-content: center;
+    background-size: cover; background-position: center;
     opacity: 0; transition: opacity 1.5s ease;
   }
   .hero-slide.active { opacity: 1; }
   .hero-slide:nth-child(1) {
-    background: linear-gradient(135deg, #C4B8A6 0%, #A89478 50%, #8B7355 100%);
+    background-image: url('img-hero1.jpg');
   }
   .hero-slide:nth-child(2) {
-    background: linear-gradient(135deg, #5B6B52 0%, #3C4A35 50%, #2A3A22 100%);
+    background-image: url('img-hero2.jpg');
   }
   .hero-slide:nth-child(3) {
-    background: linear-gradient(135deg, #8B9B80 0%, #6B7F5E 50%, #4A5E42 100%);
+    background-image: url('img-hero3.jpg');
   }
   .hero-placeholder {
     font-family: var(--font-sans); font-size: 0.65rem;
@@ -101,9 +100,13 @@
     position: relative; z-index: 2; text-align: center;
     padding: 2rem;
   }
+  .hero-slides::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(42,42,36,0.35); z-index: 1;
+  }
   .hero-mark {
     width: 60px; height: 60px; object-fit: contain;
-    filter: brightness(10) saturate(0); opacity: 0.4;
+    filter: brightness(10) saturate(0); opacity: 0.5;
     margin-bottom: 2rem;
   }
   .hero-brand {
@@ -209,13 +212,14 @@
     gap: 0; min-height: 80vh;
   }
   .concept-image {
-    background: linear-gradient(135deg, #B0A898 0%, #8B7F6F 100%);
+    background-image: url('img-concept.jpg');
+    background-size: cover; background-position: center;
     display: flex; align-items: center; justify-content: center;
     min-height: 500px; position: relative; overflow: hidden;
   }
   .concept-image::after {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 30% 70%, rgba(60,74,53,0.15) 0%, transparent 70%);
+    background: rgba(42,42,36,0.1);
   }
   .concept-content {
     display: flex; flex-direction: column;
@@ -269,9 +273,14 @@
     justify-content: center; padding: 5rem 4rem;
   }
   .logonlog-image {
-    background: linear-gradient(160deg, #6B7F5E 0%, #3C4A35 60%, #2A3A22 100%);
+    background-image: url('img-logonlog.jpg');
+    background-size: cover; background-position: center;
     display: flex; align-items: center; justify-content: center;
     min-height: 450px; position: relative;
+  }
+  .logonlog-image::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(42,42,36,0.15);
   }
 
   /* ═══════════════ GALLERY ═══════════════ */
@@ -283,7 +292,7 @@
   }
   .gallery-item {
     position: relative; overflow: hidden;
-    background: var(--c-sand);
+    background-size: cover; background-position: center;
     display: flex; align-items: center; justify-content: center;
     min-height: 280px; cursor: pointer;
   }
@@ -498,15 +507,9 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-slides">
-    <div class="hero-slide active">
-      <span class="ph">Photo 1 — ログハウス外観 全景</span>
-    </div>
-    <div class="hero-slide">
-      <span class="ph">Photo 2 — フィンランドの森・木材</span>
-    </div>
-    <div class="hero-slide">
-      <span class="ph">Photo 3 — ログハウス内観 リビング</span>
-    </div>
+    <div class="hero-slide active"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
   </div>
   <div class="hero-overlay">
     <img src="tervetalo-mark.png" alt="Terve Talo" class="hero-mark">
@@ -526,9 +529,7 @@
 
 <!-- CONCEPT -->
 <div class="concept-section">
-  <div class="concept-image">
-    <span class="ph">Photo — ログ壁のテクスチャ / 自然光</span>
-  </div>
+  <div class="concept-image"></div>
   <div class="concept-content">
     <div class="section-label reveal">Concept</div>
     <h2 class="section-heading reveal reveal-delay-1">建物は環境の一部であり、<br>人間は自然の一部である。</h2>
@@ -569,9 +570,7 @@
     <p class="section-text reveal reveal-delay-2">ログの上にログを積む。屋根の下まで、一切の妥協なく。TALOが35年以上こだわり続けてきた「総ログ」の技術を、データと実績で裏付ける。</p>
     <a href="totallog.html" class="section-link reveal reveal-delay-3">総ログについて詳しく見る</a>
   </div>
-  <div class="logonlog-image">
-    <span class="ph">Photo — 総ログ構造 / 施工中の風景</span>
-  </div>
+  <div class="logonlog-image"></div>
 </div>
 
 <!-- GALLERY -->
@@ -582,39 +581,34 @@
     <p class="section-heading-en reveal reveal-delay-1">4700 houses, each one unique</p>
 
     <div class="gallery-grid">
-      <div class="gallery-item gallery-item-wide reveal">
-        <span class="ph-dark">Photo — 施工事例 1（大型）</span>
+      <div class="gallery-item gallery-item-wide reveal" style="background-image:url('img-gallery1.jpg');">
         <div class="gallery-caption">
-          <div class="gallery-caption-title">自然と暮らす山荘</div>
-          <div class="gallery-caption-sub">Nagano</div>
+          <div class="gallery-caption-title">自然と家族の暮らし</div>
+          <div class="gallery-caption-sub">Custom Design</div>
         </div>
       </div>
-      <div class="gallery-item reveal reveal-delay-1">
-        <span class="ph-dark">Photo — 施工事例 2</span>
+      <div class="gallery-item reveal reveal-delay-1" style="background-image:url('img-gallery2.jpg');">
         <div class="gallery-caption">
-          <div class="gallery-caption-title">都市型ログハウス</div>
-          <div class="gallery-caption-sub">Tokyo</div>
+          <div class="gallery-caption-title">庭とともに暮らす平屋</div>
+          <div class="gallery-caption-sub">Custom Design</div>
         </div>
       </div>
-      <div class="gallery-item reveal reveal-delay-1">
-        <span class="ph-dark">Photo — 施工事例 3</span>
+      <div class="gallery-item reveal reveal-delay-1" style="background-image:url('img-hero3.jpg');">
         <div class="gallery-caption">
-          <div class="gallery-caption-title">海辺の別荘</div>
-          <div class="gallery-caption-sub">Chiba</div>
+          <div class="gallery-caption-title">光あふれる吹き抜け空間</div>
+          <div class="gallery-caption-sub">Custom Design</div>
         </div>
       </div>
-      <div class="gallery-item reveal reveal-delay-2">
-        <span class="ph-dark">Photo — 施工事例 4</span>
+      <div class="gallery-item reveal reveal-delay-2" style="background-image:url('img-hero2.jpg');">
         <div class="gallery-caption">
-          <div class="gallery-caption-title">薪ストーブのある暮らし</div>
-          <div class="gallery-caption-sub">Yamanashi</div>
-        </div>
-      </div>
-      <div class="gallery-item gallery-item-wide reveal reveal-delay-2">
-        <span class="ph-dark">Photo — 施工事例 5（大型）</span>
-        <div class="gallery-caption">
-          <div class="gallery-caption-title">フィンランドデザインの住まい</div>
+          <div class="gallery-caption-title">雪国に建つログハウス</div>
           <div class="gallery-caption-sub">Hokkaido</div>
+        </div>
+      </div>
+      <div class="gallery-item gallery-item-wide reveal reveal-delay-2" style="background-image:url('img-concept.jpg');">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">木のぬくもりに包まれるリビング</div>
+          <div class="gallery-caption-sub">Custom Design</div>
         </div>
       </div>
     </div>
