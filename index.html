@@ -120,6 +120,22 @@
     50% { transform: translate(-2%, 2%) scale(1.02); }
   }
 
+  .hero-mark {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    margin-bottom: 1.8rem;
+    filter: saturate(0.35) contrast(0.9);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 1s ease 0.1s forwards;
+    position: relative;
+    transition: filter 0.5s ease;
+  }
+  .hero-mark:hover {
+    filter: saturate(0.8) contrast(1);
+  }
+
   .hero-label {
     font-family: var(--font-sans);
     font-size: 0.7rem;
@@ -627,6 +643,7 @@
 
     section { padding: 4rem 1.2rem; }
     .hero { padding: 4rem 1.2rem; min-height: 100svh; }
+    .hero-mark { width: 44px; height: 44px; margin-bottom: 1.2rem; }
     .hero-label { font-size: 0.6rem; letter-spacing: 0.35em; margin-bottom: 2rem; }
     .hero-title-en { letter-spacing: 0.05em; }
     .hero-title-jp { font-size: 1.1rem; letter-spacing: 0.15em; margin-bottom: 2.5rem; }
@@ -683,7 +700,7 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
-    .hero-label, .hero-title-en, .hero-title-jp, .hero-lines, .hero-scroll {
+    .hero-mark, .hero-label, .hero-title-en, .hero-title-jp, .hero-lines, .hero-scroll {
       opacity: 1;
       transform: none;
     }
@@ -715,6 +732,7 @@
 
 <!-- HERO -->
 <section class="hero">
+  <img src="tervetalo-mark.jpg" alt="Terve Talo" class="hero-mark">
   <div class="hero-label">TALO Concept</div>
   <h1 class="hero-title-en">TERVE TALO</h1>
   <p class="hero-title-jp">それは、健康な木の家。</p>
