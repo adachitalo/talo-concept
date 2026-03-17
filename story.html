@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TALO — この快適さは、なんだろう</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-dawn: #F8F4ED;
+    --c-morning: #FAF8F4;
+    --c-noon: #F0EBE1;
+    --c-dusk: #3C3A34;
+    --c-night: #2A2824;
+    --c-ember: #8B6040;
+    --c-wood: #A08060;
+    --c-wood-light: #C4A882;
+    --c-forest: #3C4A35;
+    --c-text-light: #8A8478;
+    --c-text: #4A4840;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-jp: 'Noto Serif JP', serif;
+    --font-sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; }
+  body {
+    background: var(--c-dawn);
+    color: var(--c-text);
+    font-family: var(--font-jp);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain */
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    mix-blend-mode: difference;
+  }
+  .nav-logo { display: block; height: 20px; }
+  .nav-logo img { height: 100%; width: auto; display: block; filter: brightness(0) invert(1); }
+  .nav-back {
+    font-family: var(--font-jp); font-size: 0.8rem;
+    color: rgba(255,255,255,0.7); text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  /* STANZA — each section of the poem */
+  .stanza {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 6rem 2rem;
+    position: relative; overflow: hidden;
+    transition: background 0.8s ease;
+  }
+
+  .stanza-text {
+    max-width: 600px; text-align: center;
+  }
+
+  .stanza-line {
+    font-family: var(--font-jp);
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 300;
+    line-height: 2.8;
+    letter-spacing: 0.12em;
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+
+  .stanza-line.in-view {
+    opacity: 1; transform: translateY(0);
+  }
+
+  .stanza-line + .stanza-line { margin-top: 0.3rem; }
+
+  .stanza-break {
+    display: block; height: 2rem;
+  }
+
+  /* ─── SCENE THEMES ─── */
+
+  /* Opening — question */
+  .scene-question {
+    background: var(--c-dawn);
+    min-height: 100vh;
+  }
+  .scene-question .stanza-line {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 400;
+    color: var(--c-forest);
+    letter-spacing: 0.15em;
+  }
+
+  /* Dawn — waking up */
+  .scene-dawn {
+    background: linear-gradient(180deg, var(--c-dawn) 0%, #F5EFE4 100%);
+  }
+  .scene-dawn .stanza-line { color: var(--c-text); }
+
+  /* Morning — sunlight */
+  .scene-morning {
+    background: var(--c-morning);
+  }
+  .scene-morning .stanza-line { color: var(--c-text); }
+
+  /* Noon — cooking, warmth */
+  .scene-noon {
+    background: var(--c-noon);
+  }
+  .scene-noon .stanza-line { color: var(--c-text); }
+
+  /* Fire — stove */
+  .scene-fire {
+    background: linear-gradient(180deg, var(--c-dusk) 0%, #332E28 100%);
+  }
+  .scene-fire .stanza-line {
+    color: var(--c-wood-light);
+  }
+
+  /* Night — family dinner */
+  .scene-night {
+    background: var(--c-night);
+  }
+  .scene-night .stanza-line {
+    color: rgba(196, 168, 130, 0.85);
+  }
+
+  /* Breath — wood breathing */
+  .scene-breath {
+    background: linear-gradient(180deg, var(--c-night) 0%, var(--c-dusk) 100%);
+  }
+  .scene-breath .stanza-line {
+    color: rgba(196, 168, 130, 0.75);
+  }
+
+  /* Answer — revelation */
+  .scene-answer {
+    background: var(--c-dawn);
+    min-height: 80vh;
+  }
+  .scene-answer .stanza-line {
+    color: var(--c-text);
+  }
+  .scene-answer .stanza-line.emphasis {
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    font-weight: 500;
+    color: var(--c-forest);
+    letter-spacing: 0.15em;
+  }
+
+  /* Closing — TALO message */
+  .scene-closing {
+    background: var(--c-forest);
+    min-height: 70vh;
+  }
+  .scene-closing .stanza-line {
+    color: rgba(250, 248, 244, 0.8);
+  }
+  .scene-closing .stanza-line.brand {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 300;
+    color: var(--c-morning);
+    letter-spacing: 0.2em;
+    margin-top: 2rem;
+  }
+
+  /* Link */
+  .story-link {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    margin-top: 3rem;
+    font-family: var(--font-sans); font-size: 0.85rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(250,248,244,0.5);
+    transition: color 0.3s, gap 0.3s;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 1.2s ease 0.5s, transform 1.2s ease 0.5s, color 0.3s, gap 0.3s;
+  }
+  .story-link.in-view { opacity: 1; transform: translateY(0); }
+  .story-link:hover { color: rgba(250,248,244,0.9); gap: 1.2rem; }
+  .story-link::after { content: '→'; }
+
+  /* SEPARATOR — thin line between scenes */
+  .scene-sep {
+    height: 1px; width: 60px; margin: 0 auto;
+    background: var(--c-wood-light); opacity: 0.3;
+    position: absolute; bottom: 3rem; left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem; text-align: center;
+    background: var(--c-forest);
+  }
+  .footer-logo { height: 16px; margin: 0 auto 0.5rem; }
+  .footer-logo img { height: 100%; width: auto; display: block; margin: 0 auto; opacity: 0.5; }
+  .footer-sub {
+    font-family: var(--font-display); font-size: 0.85rem;
+    font-style: italic; color: rgba(250,248,244,0.25);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-logo { height: 16px; }
+    .stanza { padding: 5rem 1.5rem; min-height: 85vh; }
+    .stanza-line { font-size: 1.1rem; line-height: 2.6; }
+    .scene-question .stanza-line { font-size: 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    nav { padding: 0.8rem 1rem; }
+    .nav-logo { height: 14px; }
+    .stanza { padding: 4rem 1.2rem; min-height: 80vh; }
+    .stanza-line { font-size: 1rem; line-height: 2.5; letter-spacing: 0.08em; }
+    .scene-question .stanza-line { font-size: 1.3rem; }
+    .scene-answer .stanza-line.emphasis { font-size: 1.2rem; }
+    .scene-closing .stanza-line.brand { font-size: 1.3rem; }
+  }
+  @supports (min-height: 100svh) {
+    .stanza { min-height: 100svh; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stanza-line, .story-link { opacity: 1; transform: none; transition: none; }
+  }
+  @media print {
+    nav { display: none; }
+    body::after { display: none; }
+    .stanza { min-height: auto; padding: 2rem; }
+    .stanza-line { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="talo-logo-white.png" alt="TALO"></a>
+  <a href="concept.html" class="nav-back">Concept →</a>
+</nav>
+
+<!-- 1. OPENING -->
+<section class="stanza scene-question">
+  <div class="stanza-text">
+    <p class="stanza-line">「この快適さは、なんだろう」</p>
+  </div>
+</section>
+
+<!-- 2. DAWN — waking up -->
+<section class="stanza scene-dawn">
+  <div class="stanza-text">
+    <p class="stanza-line">さわやかな森の香りで、目が覚める。</p>
+    <p class="stanza-line">無垢の床に足を下ろすと、肌と木が触れ合い</p>
+    <p class="stanza-line">かすかな音が心地よく響く。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line">まだ誰も起きていない早朝。</p>
+    <p class="stanza-line">それでも、この家の中では</p>
+    <p class="stanza-line">誰かがお話をしているような気がする。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line">木の息遣いが、かすかに聞こえる。</p>
+  </div>
+</section>
+
+<!-- 3. MORNING — sunlight -->
+<section class="stanza scene-morning">
+  <div class="stanza-text">
+    <p class="stanza-line">カーテンを開けると、朝日が差し込み</p>
+    <p class="stanza-line">木目を撫でるように、美しい陰影が生まれる。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line">朝食を用意するその熱を</p>
+    <p class="stanza-line">木は静かに受け取っている。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line">少しずつ、この家も</p>
+    <p class="stanza-line">目を覚ましていく。</p>
+  </div>
+</section>
+
+<!-- 4. FIRE — stove -->
+<section class="stanza scene-fire">
+  <div class="stanza-text">
+    <p class="stanza-line">薪ストーブに火を入れると</p>
+    <p class="stanza-line">ゆらめく炎が、時間の流れをゆるやかにする。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line">十進法ではなく</p>
+    <p class="stanza-line">砂時計のように、時が流れていく。</p>
+  </div>
+</section>
+
+<!-- 5. NIGHT — family -->
+<section class="stanza scene-night">
+  <div class="stanza-text">
+    <p class="stanza-line">日が沈み</p>
+    <p class="stanza-line">家族で夕食を囲むころには</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line">このかけがえのない時間を</p>
+    <p class="stanza-line">木がそっと守ってくれているのを感じる。</p>
+  </div>
+</section>
+
+<!-- 6. BREATH — wood breathing -->
+<section class="stanza scene-breath">
+  <div class="stanza-text">
+    <p class="stanza-line">木は、熱を受け取り</p>
+    <p class="stanza-line">湿度を整え</p>
+    <p class="stanza-line">ゆっくりと呼吸している。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line">ひと時も動きを止めない自然のように</p>
+    <p class="stanza-line">私たちもまた、呼吸を止めることはない。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line">そして、このログハウスもまた</p>
+    <p class="stanza-line">私たちと同じように呼吸している。</p>
+  </div>
+</section>
+
+<!-- 7. ANSWER — the revelation -->
+<section class="stanza scene-answer">
+  <div class="stanza-text">
+    <p class="stanza-line">この安心感、この快適さは</p>
+    <p class="stanza-line">いったい何だろう。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line emphasis">その答えは</p>
+    <p class="stanza-line emphasis">家そのものが木でできているということ。</p>
+  </div>
+</section>
+
+<!-- 8. CLOSING — TALO -->
+<section class="stanza scene-closing">
+  <div class="stanza-text">
+    <p class="stanza-line">TALOのログハウスは</p>
+    <p class="stanza-line">壁の中に木があるのではなく</p>
+    <p class="stanza-line">壁そのものが木でできています。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line brand">総ログ構造。</p>
+    <span class="stanza-break"></span>
+    <p class="stanza-line">木がつくる、自然の快適さを</p>
+    <p class="stanza-line">そのまま住まいに。</p>
+    <a href="concept.html" class="story-link">TALOのコンセプトを見る</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><img src="talo-logo-white.png" alt="TALO"></div>
+  <div class="footer-sub">Terve Talo — since 1988</div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold: 0.3, rootMargin: '0px 0px -80px 0px' });
+
+  document.querySelectorAll('.stanza-line, .story-link').forEach((el, i) => {
+    el.style.transitionDelay = `${0.15 * (i % 8)}s`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
