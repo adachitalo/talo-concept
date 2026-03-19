@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TALO — TERVE TALO 健康な木の家｜東京展示場 完全予約制・無料</title>
+<meta name="description" content="TERVE TALO——健康な木の家。壁そのものが無垢の木でできた「総ログ構造」。北欧の知恵を日本の風土に。35年、4700棟の実績。東京展示場で体感してください。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root{--c-bg:#F6F3EE;--c-bg-warm:#EDE8E0;--c-dark:#2A2A24;--c-forest:#3C4A35;--c-forest-light:#5B6B52;--c-wood:#8B7355;--c-wood-light:#A89478;--c-cream:#FAF8F4;--c-sand:#D4CCBE;--c-text:#3A3A34;--c-text-light:#7A7A70;--c-accent:#6B7F5E;--font-display:'Cormorant Garamond',serif;--font-jp:'Noto Serif JP',serif;--font-sans:'DM Sans',sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;font-size:16px}
+  body{background:var(--c-bg);color:var(--c-text);font-family:var(--font-jp);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;transition:background .5s,backdrop-filter .5s}
+  nav.scrolled{background:rgba(246,243,238,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(0,0,0,.04)}
+  .nav-logo{display:block;height:22px}.nav-logo img{height:100%;width:auto;display:block}
+  .nav-cta{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.5rem;font-family:var(--font-jp);font-size:.75rem;letter-spacing:.1em;text-decoration:none;background:var(--c-forest);color:var(--c-cream);border:1px solid var(--c-forest);transition:all .3s;opacity:0;transform:translateY(-5px);pointer-events:none}
+  nav.scrolled .nav-cta{opacity:1;transform:translateY(0);pointer-events:auto}
+  .nav-cta:hover{background:transparent;color:var(--c-forest)}
+
+  /* HERO */
+  .hero{height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .hero-bg{position:absolute;inset:0;background-image:url('img-hero1.jpg');background-size:cover;background-position:center 40%}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,42,36,.18) 0%,rgba(42,42,36,.32) 50%,rgba(42,42,36,.62) 100%)}
+  .hero-c{position:relative;z-index:2;text-align:center;padding:2rem;max-width:820px}
+  .hero-mark{width:52px;height:52px;object-fit:contain;filter:brightness(10) saturate(0);opacity:.45;margin:0 auto 1.5rem;display:block}
+  .hero-brand{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:300;letter-spacing:.2em;color:#fff;line-height:1.1;margin-bottom:.5rem;opacity:0;transform:translateY(30px);animation:fadeUp 1.2s ease .3s forwards}
+  .hero-tagline{font-family:var(--font-jp);font-size:clamp(.9rem,1.5vw,1.1rem);font-weight:200;color:rgba(255,255,255,.6);letter-spacing:.25em;margin-bottom:3rem;opacity:0;transform:translateY(30px);animation:fadeUp 1.2s ease .6s forwards}
+  .hero-lines{opacity:0;transform:translateY(30px);animation:fadeUp 1.2s ease .9s forwards}
+  .hero-line{font-family:var(--font-jp);font-size:clamp(.85rem,1.3vw,1rem);font-weight:300;color:rgba(255,255,255,.55);letter-spacing:.12em;line-height:2.4}
+  .hero-cta-wrap{margin-top:3rem;opacity:0;transform:translateY(30px);animation:fadeUp 1s ease 1.2s forwards}
+  .hero-btn{display:inline-flex;align-items:center;gap:.8rem;padding:1rem 2.5rem;font-family:var(--font-jp);font-size:.85rem;letter-spacing:.15em;text-decoration:none;background:var(--c-cream);color:var(--c-forest);border:1px solid var(--c-cream);transition:all .4s}
+  .hero-btn:hover{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+  .hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+  .hero-scroll span{font-family:var(--font-sans);font-size:.6rem;letter-spacing:.3em;color:rgba(255,255,255,.3);text-transform:uppercase}
+  .scroll-line{width:1px;height:40px;background:rgba(255,255,255,.15);position:relative;overflow:hidden}
+  .scroll-line::after{content:'';position:absolute;top:-100%;width:100%;height:100%;background:rgba(255,255,255,.5);animation:scrollDown 2s ease-in-out infinite}
+  @keyframes scrollDown{0%{top:-100%}100%{top:100%}}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+  /* SECTIONS */
+  section{padding:7rem 2rem;position:relative}
+  .si{max-width:780px;margin:0 auto}
+  .sw{max-width:960px;margin:0 auto}
+  .sl{font-family:var(--font-sans);font-size:.7rem;letter-spacing:.5em;text-transform:uppercase;color:var(--c-accent);margin-bottom:1.2rem;display:flex;align-items:center;gap:1.2rem}
+  .sl::before{content:'';width:35px;height:1px;background:var(--c-accent)}
+  .sh{font-family:var(--font-jp);font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:400;color:var(--c-forest);letter-spacing:.08em;line-height:1.7;margin-bottom:2.5rem}
+  .st{font-family:var(--font-jp);font-size:.95rem;font-weight:300;color:var(--c-text);line-height:2.2;letter-spacing:.04em;margin-bottom:1.5rem}
+  .st:last-child{margin-bottom:0}
+
+  .s-dark{background:var(--c-forest);color:var(--c-cream);position:relative;overflow:hidden}
+  .s-dark::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(139,115,85,.12) 0%,transparent 60%)}
+  .s-dark .sl{color:var(--c-wood-light)}.s-dark .sl::before{background:var(--c-wood-light)}
+  .s-dark .sh{color:var(--c-cream)}.s-dark .st{color:rgba(250,248,244,.75)}
+  .s-warm{background:var(--c-bg-warm)}.s-cream{background:var(--c-cream)}
+
+  /* POEM */
+  .poem{padding:7rem 2rem;text-align:center;background:linear-gradient(180deg,var(--c-bg) 0%,var(--c-bg-warm) 100%)}
+  .poem-line{font-family:var(--font-jp);font-size:clamp(.95rem,1.6vw,1.15rem);font-weight:300;color:var(--c-text);letter-spacing:.12em;line-height:2.8}
+  .poem-break{display:block;height:1.2rem}
+  .poem-em{font-weight:400;color:var(--c-forest);font-size:clamp(1.05rem,1.8vw,1.3rem)}
+
+  /* EPIGRAPH */
+  .epigraph{padding:5rem 2rem;text-align:center;background:var(--c-forest);position:relative;overflow:hidden}
+  .epigraph::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(139,115,85,.1) 0%,transparent 70%)}
+  .epi-q{font-family:var(--font-jp);font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:300;color:var(--c-cream);letter-spacing:.18em;line-height:2.2;position:relative;max-width:700px;margin:0 auto 1.5rem}
+  .epi-m{font-family:var(--font-jp);font-size:.85rem;font-weight:300;color:rgba(250,248,244,.4);letter-spacing:.08em;line-height:2;position:relative;max-width:550px;margin:0 auto}
+
+  /* ACCENT QUOTE */
+  .aq{padding:5rem 2rem;text-align:center;background:var(--c-cream);position:relative}
+  .aq::before,.aq::after{content:'';position:absolute;left:50%;transform:translateX(-50%);width:1px;height:40px}
+  .aq::before{top:0;background:linear-gradient(to bottom,transparent,var(--c-sand))}
+  .aq::after{bottom:0;background:linear-gradient(to top,transparent,var(--c-sand))}
+  .aq-text{font-family:var(--font-jp);font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:400;color:var(--c-forest);letter-spacing:.18em;line-height:2}
+
+  /* PILLARS */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3rem}
+  .pillar{padding:2.5rem 2rem;border-right:1px solid rgba(250,248,244,.1)}
+  .pillar:last-child{border-right:none}
+  .pillar-t{font-family:var(--font-jp);font-size:.95rem;font-weight:500;color:var(--c-cream);letter-spacing:.08em;margin-bottom:.8rem}
+  .pillar-b{font-family:var(--font-jp);font-size:.8rem;font-weight:300;color:rgba(250,248,244,.55);line-height:2;letter-spacing:.03em}
+
+  /* DIAGRAM */
+  .diag{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:3rem}
+  .diag-card{text-align:center;padding:2.5rem 1.5rem 2rem;position:relative}
+  .diag-no{border:1px solid var(--c-sand);background:var(--c-bg)}
+  .diag-yes{border:2px solid var(--c-accent);background:var(--c-cream)}
+  .diag-badge{position:absolute;top:-.7rem;left:50%;transform:translateX(-50%);padding:.2rem 1rem;font-family:var(--font-sans);font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;white-space:nowrap}
+  .diag-badge-no{background:var(--c-bg);color:var(--c-text-light);border:1px solid var(--c-sand)}
+  .diag-badge-yes{background:var(--c-accent);color:#fff}
+  .diag-house{width:100%;max-width:180px;margin:0 auto 1.5rem}
+  .diag-floor{padding:1rem 0;text-align:center;font-family:var(--font-jp);font-size:.85rem;font-weight:400;letter-spacing:.08em}
+  .diag-roof{width:0;height:0;margin:0 auto;border-left:90px solid transparent;border-right:90px solid transparent}
+  .roof-g{border-bottom:45px solid var(--c-sand)}.roof-gr{border-bottom:45px solid var(--c-accent)}
+  .fl-log{background:var(--c-accent);color:#fff}.fl-fr{background:var(--c-sand);color:var(--c-text-light)}
+  .diag-label{font-family:var(--font-jp);font-size:.82rem;font-weight:400;color:var(--c-forest);letter-spacing:.05em;margin-bottom:.5rem}
+  .diag-desc{font-family:var(--font-jp);font-size:.75rem;font-weight:300;color:var(--c-text-light);line-height:1.8}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem}
+  .stat{text-align:center;padding:2rem 1rem;border-right:1px solid rgba(250,248,244,.1)}
+  .stat:last-child{border-right:none}
+  .stat-n{font-family:var(--font-display);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:300;color:var(--c-cream);line-height:1;margin-bottom:.4rem}
+  .stat-u{font-family:var(--font-jp);font-size:.78rem;font-weight:300;color:var(--c-wood-light);letter-spacing:.1em;margin-bottom:.6rem}
+  .stat-d{font-family:var(--font-jp);font-size:.7rem;font-weight:300;color:rgba(250,248,244,.4);line-height:1.7}
+
+  /* HIGHLIGHT BOX */
+  .hbox{margin-top:2.5rem;padding:2.5rem;background:var(--c-cream);border-left:2px solid var(--c-accent)}
+  .hbox p{font-family:var(--font-jp);font-size:.85rem;font-weight:400;color:var(--c-forest);line-height:2;letter-spacing:.05em}
+
+  /* GALLERY */
+  .gallery{display:grid;grid-template-columns:2fr 1fr 1fr;gap:.5rem;margin-top:3rem}
+  .gallery img{width:100%;height:100%;min-height:240px;object-fit:cover;display:block;filter:saturate(.9) contrast(.95);transition:filter .4s}
+  .gallery img:hover{filter:saturate(1) contrast(1)}
+
+  /* TESTIMONIAL */
+  .testi{padding:5rem 2rem;text-align:center;background:var(--c-cream);position:relative}
+  .testi::before,.testi::after{content:'';position:absolute;left:50%;transform:translateX(-50%);width:1px;height:40px}
+  .testi::before{top:0;background:linear-gradient(to bottom,transparent,var(--c-sand))}
+  .testi::after{bottom:0;background:linear-gradient(to top,transparent,var(--c-sand))}
+  .testi-t{font-family:var(--font-jp);font-size:clamp(.92rem,1.4vw,1.05rem);font-weight:300;color:var(--c-text);letter-spacing:.08em;line-height:2.4;max-width:600px;margin:0 auto 1.5rem}
+  .testi-a{font-family:var(--font-jp);font-size:.78rem;font-weight:400;color:var(--c-wood);letter-spacing:.1em}
+
+  /* ACCESS */
+  .access{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;align-items:start}
+  .access-map{width:100%;aspect-ratio:4/3;border:1px solid var(--c-sand);background:var(--c-bg-warm)}
+  .access-map iframe{width:100%;height:100%;border:0}
+  .acc-item{padding:1.2rem 0;border-bottom:1px solid var(--c-sand)}
+  .acc-item:first-child{padding-top:0}
+  .acc-l{font-family:var(--font-sans);font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--c-accent);margin-bottom:.4rem}
+  .acc-v{font-family:var(--font-jp);font-size:.88rem;font-weight:300;color:var(--c-text);line-height:1.8}
+  .acc-v a{color:var(--c-forest);text-decoration:none}
+  .acc-note{font-family:var(--font-jp);font-size:.78rem;font-weight:300;color:var(--c-text-light);line-height:1.8;margin-top:1.5rem}
+
+  /* PROMISE */
+  .promise{padding:4.5rem 2rem;text-align:center;background:var(--c-bg-warm)}
+  .promise-t{font-family:var(--font-jp);font-size:.95rem;font-weight:400;color:var(--c-forest);letter-spacing:.1em;margin-bottom:1.5rem}
+  .promise-list{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+  .promise-i{display:flex;align-items:center;gap:.6rem;font-family:var(--font-jp);font-size:.85rem;font-weight:300;color:var(--c-forest);letter-spacing:.05em}
+  .promise-ck{width:18px;height:18px;border-radius:50%;background:var(--c-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .promise-ck svg{width:10px;height:10px;stroke:#fff;fill:none;stroke-width:2.5}
+
+  /* CTA */
+  .cta{background:var(--c-forest);text-align:center;padding:6rem 2rem;position:relative;overflow:hidden}
+  .cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(139,115,85,.1) 0%,transparent 70%)}
+  .cta-h{font-family:var(--font-jp);font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:300;color:var(--c-cream);letter-spacing:.15em;line-height:2;margin-bottom:.8rem;position:relative}
+  .cta-s{font-family:var(--font-jp);font-size:.82rem;font-weight:200;color:rgba(250,248,244,.45);letter-spacing:.08em;line-height:1.8;margin-bottom:2.5rem;position:relative}
+  .cta-btns{display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;position:relative}
+  .cta-btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2.5rem;font-family:var(--font-jp);font-size:.85rem;letter-spacing:.12em;text-decoration:none;transition:all .4s}
+  .cta-p{background:var(--c-cream);color:var(--c-forest);border:1px solid var(--c-cream)}
+  .cta-p:hover{background:transparent;color:var(--c-cream)}
+  .cta-sc{background:transparent;color:var(--c-cream);border:1px solid rgba(250,248,244,.3)}
+  .cta-sc:hover{border-color:var(--c-cream);background:rgba(250,248,244,.08)}
+  .cta-tel{font-family:var(--font-display);font-size:1.3rem;font-weight:300;color:rgba(250,248,244,.6);letter-spacing:.08em;margin-top:1.8rem;position:relative}
+  .cta-tel a{color:rgba(250,248,244,.6);text-decoration:none;transition:color .3s}.cta-tel a:hover{color:var(--c-cream)}
+  .cta-tel-l{font-family:var(--font-jp);font-size:.7rem;font-weight:300;color:rgba(250,248,244,.3);letter-spacing:.1em;margin-top:.3rem}
+
+  /* FOOTER */
+  footer{padding:3rem;text-align:center;background:var(--c-dark)}
+  .f-logo{height:16px;margin:0 auto .5rem}.f-logo img{height:100%;width:auto;display:block;margin:0 auto;opacity:.5}
+  .f-sub{font-family:var(--font-display);font-size:.85rem;font-style:italic;color:rgba(250,248,244,.25);margin-top:.3rem}
+  .f-links{display:flex;justify-content:center;gap:2rem;margin-top:1.5rem;flex-wrap:wrap}
+  .f-links a{font-family:var(--font-jp);font-size:.72rem;font-weight:300;color:rgba(250,248,244,.3);text-decoration:none;letter-spacing:.05em;transition:color .3s}
+  .f-links a:hover{color:rgba(250,248,244,.6)}
+  .f-copy{font-family:var(--font-sans);font-size:.6rem;color:rgba(250,248,244,.12);margin-top:1.5rem;letter-spacing:.1em}
+
+  /* REVEAL */
+  .rv{opacity:0;transform:translateY(35px);transition:opacity .9s ease,transform .9s ease}
+  .rv.in-view{opacity:1;transform:translateY(0)}
+  .rv-d1{transition-delay:.15s}.rv-d2{transition-delay:.3s}.rv-d3{transition-delay:.45s}
+
+  /* RESPONSIVE */
+  @media(max-width:1024px){
+    .pillars,.stats{grid-template-columns:1fr 1fr}
+    .pillar:nth-child(2){border-right:none}
+    .pillar:nth-child(1),.pillar:nth-child(2){border-bottom:1px solid rgba(250,248,244,.1)}
+    .stat:nth-child(2){border-right:none}
+    .access{grid-template-columns:1fr;gap:2rem}
+  }
+  @media(max-width:768px){
+    nav{padding:1rem 1.5rem}.nav-logo{height:18px}
+    section{padding:5rem 1.5rem}
+    .hero-brand{letter-spacing:.1em}
+    .poem{padding:5rem 1.5rem}
+    .epigraph{padding:4rem 1.5rem}
+    .pillars{grid-template-columns:1fr}
+    .pillar{border-right:none;border-bottom:1px solid rgba(250,248,244,.1)}
+    .pillar:last-child{border-bottom:none}
+    .diag{grid-template-columns:1fr;gap:2rem}
+    .diag-roof{border-left-width:80px;border-right-width:80px}
+    .roof-g,.roof-gr{border-bottom-width:40px}
+    .gallery{grid-template-columns:1fr 1fr}.gallery>*:first-child{grid-column:span 2}
+    .promise-list{gap:1.5rem}
+    .cta{padding:5rem 1.5rem}
+    footer{padding:2.5rem 1.5rem}
+  }
+  @media(max-width:480px){
+    nav{padding:.8rem 1rem}.nav-logo{height:15px}
+    .nav-cta{font-size:.7rem;padding:.5rem 1rem}
+    section{padding:4rem 1.2rem}
+    .hero-line{font-size:.88rem}
+    .poem{padding:4rem 1.2rem}.poem-line{font-size:.9rem;letter-spacing:.08em}
+    .epigraph{padding:3rem 1.2rem}
+    .st{font-size:.9rem}
+    .stats{grid-template-columns:1fr 1fr}
+    .gallery{grid-template-columns:1fr}.gallery>*:first-child{grid-column:span 1}
+    .gallery img{min-height:180px}
+    .promise-list{flex-direction:column;align-items:center;gap:1rem}
+    .cta{padding:4rem 1.2rem}
+    .cta-btns{flex-direction:column;align-items:center}
+    footer{padding:2rem 1rem}
+  }
+  @supports(min-height:100svh){.hero{height:100svh}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}.hero-brand,.hero-tagline,.hero-lines,.hero-cta-wrap{opacity:1;transform:none}}
+  @media print{nav,.hero-scroll{display:none}body::after{display:none}.hero{height:auto;min-height:200px}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><img src="talo-logo-green.png" alt="TALO"></a>
+  <a href="#reserve" class="nav-cta">来場予約する</a>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-c">
+    <img src="tervetalo-mark.png" alt="Terve Talo" class="hero-mark">
+    <h1 class="hero-brand">TERVE TALO</h1>
+    <p class="hero-tagline">健康な木の家</p>
+    <div class="hero-lines">
+      <p class="hero-line">飾るためではなく、住まうために。</p>
+      <p class="hero-line">見せるためではなく、守るために。</p>
+      <p class="hero-line">ログハウスの本質を、すべての人に。</p>
+    </div>
+    <div class="hero-cta-wrap">
+      <a href="#reserve" class="hero-btn">東京展示場で体感する</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- ══════════ STORY / POEM ══════════ -->
+<div class="poem">
+  <div class="rv">
+    <p class="poem-line">さわやかな森の香りで、目が覚める。</p>
+    <p class="poem-line">無垢の床に足を下ろすと、かすかな温もりが伝わる。</p>
+    <span class="poem-break"></span>
+    <p class="poem-line">薪ストーブに火を入れると</p>
+    <p class="poem-line">ゆらめく炎が、時間の流れをゆるやかにする。</p>
+    <span class="poem-break"></span>
+    <p class="poem-line">この安心感は、いったい何だろう。</p>
+    <span class="poem-break"></span>
+    <p class="poem-line poem-em">その答えは、</p>
+    <p class="poem-line poem-em">家そのものが木でできている、ということ。</p>
+  </div>
+</div>
+
+<!-- ══════════ EPIGRAPH ══════════ -->
+<div class="epigraph">
+  <p class="epi-q rv">建物は環境の一部であり、<br>人間は自然の一部である。</p>
+  <p class="epi-m rv rv-d1">自然や環境との調和なくして、人間も建物も成り立たない。<br>この原理こそが、TALOのすべての出発点である。</p>
+</div>
+
+<!-- ══════════ WHY LOG HOUSE ══════════ -->
+<section>
+  <div class="si">
+    <div class="sl rv">Why Log House</div>
+    <h2 class="sh rv rv-d1">なぜ、ログハウスなのか。</h2>
+    <p class="st rv rv-d2">ログハウスは、人類が最も古くから作り続けてきた住まいのかたちの一つである。丸太を積み、壁とし、屋根をかける。その構造は極めてシンプルだが、そのシンプルさの中にこそ、他の工法にはない強さがある。</p>
+    <p class="st rv rv-d2">分厚い無垢の木が周囲を包み込む。それだけで、断熱、蓄熱、調湿、耐震性、耐火性が生まれる。接着剤も合板も、化学物質も要らない。家そのものが呼吸し、住む人の健康を守る。</p>
+    <p class="st rv rv-d2">一般的な木造住宅では、構造材は壁の中に隠れている。室内に見える「木」は、多くの場合、合板の表面に木目を印刷したシートである。見た目は木でも、触ると冷たい。香りもしない。湿度も調整しない。TALOのログハウスは、壁そのものが無垢の木で構成されている。見える、触れる、香る、呼吸する。それが「本物の木の家」である。</p>
+  </div>
+</section>
+
+<!-- ══════════ ACCENT QUOTE ══════════ -->
+<div class="aq">
+  <p class="aq-text rv">絶対的な安心。絶対的な安全。絶対的な快適。</p>
+</div>
+
+<!-- ══════════ ORIGIN ══════════ -->
+<section class="s-warm">
+  <div class="si">
+    <div class="sl rv">Our Origin</div>
+    <h2 class="sh rv rv-d1">北欧の知恵を、日本の風土に。</h2>
+    <p class="st rv rv-d2">1988年、フィンランドで建築家として活動していた創業者が、一つの確信を持ってTALOを設立した。「フィンランドのマシンカットログハウスを、日本の気候・土地・人に合わせて進化させれば、理想の住まいになる」</p>
+    <p class="st rv rv-d2">以来35年以上、4700棟を超えるログハウスを一棟一棟、日本各地の風土に合わせて建ててきた。北欧の原型をそのまま持ち込むのではなく、日本という風土の中で進化させ続けること。それがTALOの創業以来変わらぬ哲学である。</p>
+  </div>
+</section>
+
+<!-- ══════════ LOG ON LOG ══════════ -->
+<section>
+  <div class="sw">
+    <div class="sl rv">LOG on LOG</div>
+    <h2 class="sh rv rv-d1">なぜ、「総ログ」でなければならないのか。</h2>
+    <p class="st rv rv-d2">ログハウスの安心・安全・快適は、分厚いログ壁が家全体を包み込むことではじめて実現する。一階だけログで、二階は別の工法——それではログハウスの本質は届かない。TALOが「総ログ」にこだわるのは、商品の差別化のためではなく、お客様への約束だからである。</p>
+    <div class="diag rv rv-d2">
+      <div class="diag-card diag-no">
+        <div class="diag-badge diag-badge-no">一般的なログハウス</div>
+        <div class="diag-house"><div class="diag-roof roof-g"></div><div class="diag-floor fl-fr">2F：軸組工法</div><div class="diag-floor fl-log">1F：ログ壁</div></div>
+        <div class="diag-label">1階のみログ</div>
+        <div class="diag-desc">2階は一般工法。ログの性能が家全体に届かない。</div>
+      </div>
+      <div class="diag-card diag-yes">
+        <div class="diag-badge diag-badge-yes">TALO — LOG on LOG</div>
+        <div class="diag-house"><div class="diag-roof roof-gr"></div><div class="diag-floor fl-log">2F：ログ壁</div><div class="diag-floor fl-log">1F：ログ壁</div></div>
+        <div class="diag-label">総ログ</div>
+        <div class="diag-desc">全面ログ壁。耐震・耐火・調湿・蓄熱のすべてが家全体で機能する。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PERFORMANCE ══════════ -->
+<section class="s-dark">
+  <div class="sw" style="position:relative">
+    <div class="sl rv">Performance</div>
+    <h2 class="sh rv rv-d1">総ログが守る。</h2>
+    <div class="pillars rv rv-d2">
+      <div class="pillar"><div class="pillar-t">地震に強い。</div><div class="pillar-b">ログ壁の自重と組み上げ構造が、強靭な耐震性能を生む。大震災での倒壊報告ゼロ。ログ同士の摩擦が揺れのエネルギーを吸収する制震機構が構造に組み込まれている。</div></div>
+      <div class="pillar"><div class="pillar-t">火災に強い。</div><div class="pillar-b">分厚い無垢材は表面が炭化して内部を守る。合板不使用で有害ガスの発生も抑える。TALO独自の60分耐火認定を取得。防火地域でもログ壁のまま建設が可能。</div></div>
+      <div class="pillar"><div class="pillar-t">心地良い。</div><div class="pillar-b">無垢材の壁が自然に吸放湿し、室内湿度40〜60%を維持。機械に頼らず四季の湿度変化に応える。壁内結露が起きにくく、建物の寿命を大幅に延ばす。</div></div>
+    </div>
+    <div class="stats rv rv-d3">
+      <div class="stat"><div class="stat-n">3</div><div class="stat-u">耐震等級</div><div class="stat-d">建築基準法の1.5倍</div></div>
+      <div class="stat"><div class="stat-n">60<span style="font-size:.5em">min</span></div><div class="stat-u">耐火認定</div><div class="stat-d">業界最薄壁厚で取得</div></div>
+      <div class="stat"><div class="stat-n">50<span style="font-size:.5em">%</span></div><div class="stat-u">自然調湿</div><div class="stat-d">機械不要で快適湿度</div></div>
+      <div class="stat"><div class="stat-n">100<span style="font-size:.4em">年+</span></div><div class="stat-u">耐久性</div><div class="stat-d">木は200年強度が向上</div></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem"><a href="logonlog.html" style="display:inline-flex;align-items:center;gap:.6rem;font-family:var(--font-sans);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--c-wood-light);transition:color .3s" class="rv rv-d3">技術的な詳細を見る &rarr;</a></div>
+  </div>
+</section>
+
+<!-- ══════════ CUSTOM DESIGN ══════════ -->
+<section>
+  <div class="si">
+    <div class="sl rv">Custom Design</div>
+    <h2 class="sh rv rv-d1">あなたの土地に、あなたの家を。</h2>
+    <p class="st rv rv-d2">南北に長い日本には、雪国もあれば亜熱帯もある。広い土地もあれば、狭小な変形地もある。家族のかたちも、暮らし方も一つとして同じものはない。</p>
+    <p class="st rv rv-d2">だからTALOは、創業当初から自由設計にこだわり続けてきた。画一的なプランを押し付けるのではなく、それぞれの土地、気候、ライフスタイルに合わせた一棟を、設計力と技術力でかたちにする。</p>
+    <div class="hbox rv rv-d2">
+      <p>バリエーション豊かなログ材——フィンランド産パイン材から、国産の杉材、檜材まで。フィンランド材を使う理由はただ一つ、それが良いものだからである。産地への盲信ではなく、品質への純粋な選択。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ GALLERY ══════════ -->
+<section class="s-warm">
+  <div class="sw">
+    <div class="sl rv">Works</div>
+    <h2 class="sh rv rv-d1">すべてが自由設計。4700棟の実績。</h2>
+    <p class="st rv rv-d2">平屋も、総二階も。都市部も、山間の傾斜地も。展示場では過去の施工事例集もご覧いただけます。</p>
+    <div class="gallery rv rv-d2">
+      <img src="img-gallery1.jpg" alt="TALO施工例" loading="lazy">
+      <img src="img-gallery2.jpg" alt="TALO施工例" loading="lazy">
+      <img src="img-hero3.jpg" alt="TALO施工例" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TESTIMONIAL ══════════ -->
+<div class="testi">
+  <div class="rv">
+    <p class="testi-t">「展示場で壁に触れた瞬間、<br>『この家がいい』と思いました。<br>カタログだけでは、<br>この感覚は絶対にわからなかった」</p>
+    <p class="testi-a">—— TALOオーナー</p>
+  </div>
+</div>
+
+<!-- ══════════ ACCESS ══════════ -->
+<section id="reserve">
+  <div class="sw">
+    <div class="sl rv">Tokyo Exhibition</div>
+    <h2 class="sh rv rv-d1">東京展示場のご案内</h2>
+    <p class="st rv rv-d2">小田急線・喜多見駅から徒歩5分。お仕事帰りでも、週末のお出かけついでにも。木の手ざわりと香りを、ぜひ確かめに来てください。</p>
+    <div class="access rv rv-d2">
+      <div class="access-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.5!2d139.5956!3d35.6422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018f1c7f1f1f1f1%3A0x1234567890abcdef!2z5p2x5Lqs6YO95LiW55Sw6LC35Yy65Zac5aSa6KaL!5e0!3m2!1sja!2sjp!4v1711234567890!5m2!1sja!2sjp" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <div>
+        <div class="acc-item"><div class="acc-l">Address</div><div class="acc-v">〒157-0067<br>東京都世田谷区喜多見9-12-8</div></div>
+        <div class="acc-item"><div class="acc-l">Access</div><div class="acc-v">小田急線「喜多見駅」北口 徒歩5分<br>お車は近隣コインパーキングをご利用ください</div></div>
+        <div class="acc-item"><div class="acc-l">Open</div><div class="acc-v">10:00 — 16:00（完全予約制）</div></div>
+        <div class="acc-item"><div class="acc-l">Tel</div><div class="acc-v"><a href="tel:0354945922">03-5494-5922</a></div></div>
+        <div class="acc-note">※ 完全予約制のため、事前にご予約をお願いいたします。<br>※ ご家族やパートナーとご一緒にどうぞ。<br>※ 成城のTALO本社ショールームもあわせてご案内可能です。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROMISE ══════════ -->
+<div class="promise">
+  <div class="rv">
+    <p class="promise-t">TALOのお約束</p>
+    <div class="promise-list">
+      <div class="promise-i"><div class="promise-ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>ご来場後の営業電話はしません</div>
+      <div class="promise-i"><div class="promise-ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>突然の訪問営業もしません</div>
+      <div class="promise-i"><div class="promise-ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>1組ずつプライベートでご案内</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CTA ══════════ -->
+<div class="cta">
+  <p class="cta-h rv">本物の木の家を、<br>あなたの五感で確かめてください。</p>
+  <p class="cta-s rv rv-d1">完全予約制・無料。世田谷区・喜多見駅から徒歩5分。</p>
+  <div class="cta-btns">
+    <a href="https://www.talo.co.jp/exhibition/tokyo/" class="cta-btn cta-p rv rv-d2">WEBで来場予約する</a>
+    <a href="https://www.talo.co.jp/catalog/" class="cta-btn cta-sc rv rv-d3">まずは資料請求</a>
+  </div>
+  <div class="cta-tel rv rv-d3"><a href="tel:0354945922">03-5494-5922</a><div class="cta-tel-l">受付時間 10:00–18:00</div></div>
+</div>
+
+<footer>
+  <div class="f-logo"><img src="talo-logo-white.png" alt="TALO"></div>
+  <div class="f-sub">Terve Talo — since 1988</div>
+  <div class="f-links">
+    <a href="https://www.talo.co.jp/">TALOトップ</a>
+    <a href="concept.html">コンセプト</a>
+    <a href="logonlog.html">LOG on LOG</a>
+    <a href="story.html">ストーリー</a>
+    <a href="https://www.talo.co.jp/example/">施工事例</a>
+  </div>
+  <p class="f-copy">&copy; 2007–2026 TALO International. All Rights Reserved.</p>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>80)},{passive:true});
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in-view')})},{threshold:.12,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
+</script>
+</body>
+</html>
