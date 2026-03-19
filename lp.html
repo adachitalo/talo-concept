@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TALO東京展示場 — 本物の木の家を、確かめに来てください。｜完全予約制・無料</title>
+<meta name="description" content="TALOログハウス東京展示場。世田谷・喜多見駅徒歩5分。壁そのものが無垢の木でできた家。写真ではわからない手ざわりと空気を、ぜひ現地で。完全予約制・無料。">
+<meta property="og:title" content="TALO東京展示場 — 本物の木の家を、確かめに来てください。">
+<meta property="og:description" content="壁そのものが無垢の木でできた家。世田谷・喜多見駅徒歩5分。完全予約制・無料。">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c-bg: #F6F3EE;
+    --c-bg-warm: #EDE8E0;
+    --c-dark: #2A2A24;
+    --c-forest: #3C4A35;
+    --c-forest-light: #5B6B52;
+    --c-wood: #8B7355;
+    --c-wood-light: #A89478;
+    --c-cream: #FAF8F4;
+    --c-sand: #D4CCBE;
+    --c-text: #3A3A34;
+    --c-text-light: #7A7A70;
+    --c-accent: #6B7F5E;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-jp: 'Noto Serif JP', serif;
+    --font-sans: 'DM Sans', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: var(--c-bg); color: var(--c-text);
+    font-family: var(--font-jp); overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+  }
+
+  /* ═══ NAV ═══ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.5s, backdrop-filter 0.5s;
+  }
+  nav.scrolled {
+    background: rgba(246,243,238,0.92);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+  .nav-logo { display: block; height: 22px; }
+  .nav-logo img { height: 100%; width: auto; display: block; }
+  .nav-cta-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1.5rem;
+    font-family: var(--font-jp); font-size: 0.75rem;
+    letter-spacing: 0.1em; text-decoration: none;
+    background: var(--c-forest); color: var(--c-cream);
+    border: 1px solid var(--c-forest); transition: all 0.3s;
+    opacity: 0; transform: translateY(-5px); pointer-events: none;
+  }
+  nav.scrolled .nav-cta-btn {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+  }
+  .nav-cta-btn:hover { background: transparent; color: var(--c-forest); }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    height: 100vh; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('img-hero1.jpg');
+    background-size: cover; background-position: center 40%;
+  }
+  .hero-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+      rgba(42,42,36,0.18) 0%,
+      rgba(42,42,36,0.32) 50%,
+      rgba(42,42,36,0.62) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; padding: 2rem;
+    max-width: 820px;
+  }
+  .hero-eyecatch {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    letter-spacing: 0.5em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45); margin-bottom: 2rem;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-title {
+    font-family: var(--font-jp);
+    font-size: clamp(1.5rem, 4vw, 2.8rem);
+    font-weight: 300; color: #fff;
+    letter-spacing: 0.15em; line-height: 2;
+    margin-bottom: 1.5rem;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 1.2s ease 0.5s forwards;
+  }
+  .hero-sub {
+    font-family: var(--font-jp);
+    font-size: clamp(0.82rem, 1.2vw, 0.95rem);
+    font-weight: 200; color: rgba(255,255,255,0.6);
+    letter-spacing: 0.1em; line-height: 2.2;
+    margin-bottom: 2.5rem;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 1.2s ease 0.8s forwards;
+  }
+  .hero-meta {
+    display: flex; justify-content: center; gap: 2rem;
+    flex-wrap: wrap; margin-bottom: 3rem;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 1s ease 0.95s forwards;
+  }
+  .hero-meta-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-jp); font-size: 0.78rem;
+    font-weight: 300; color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+  .hero-meta-icon {
+    width: 16px; height: 16px;
+    stroke: rgba(255,255,255,0.4); fill: none; stroke-width: 1.5;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    padding: 1rem 2.8rem;
+    font-family: var(--font-jp); font-size: 0.85rem;
+    letter-spacing: 0.15em; text-decoration: none;
+    background: var(--c-cream); color: var(--c-forest);
+    border: 1px solid var(--c-cream); transition: all 0.4s;
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+  .hero-cta:hover {
+    background: transparent; color: #fff;
+    border-color: rgba(255,255,255,0.6);
+  }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%); z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  }
+  .hero-scroll span {
+    font-family: var(--font-sans); font-size: 0.6rem;
+    letter-spacing: 0.3em; color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 40px; background: rgba(255,255,255,0.15);
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: ''; position: absolute; top: -100%;
+    width: 100%; height: 100%; background: rgba(255,255,255,0.5);
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+  @keyframes scrollDown { 0% { top: -100%; } 100% { top: 100%; } }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  /* ═══ SECTIONS ═══ */
+  section { padding: 7rem 2rem; position: relative; }
+  .section-inner { max-width: 780px; margin: 0 auto; }
+  .section-wide { max-width: 960px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-sans); font-size: 0.7rem;
+    letter-spacing: 0.5em; text-transform: uppercase;
+    color: var(--c-accent); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 1.2rem;
+  }
+  .section-label::before {
+    content: ''; width: 35px; height: 1px; background: var(--c-accent);
+  }
+  .section-heading {
+    font-family: var(--font-jp);
+    font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+    font-weight: 400; color: var(--c-forest);
+    letter-spacing: 0.08em; line-height: 1.7; margin-bottom: 2.5rem;
+  }
+  .section-text {
+    font-family: var(--font-jp); font-size: 0.95rem;
+    font-weight: 300; color: var(--c-text);
+    line-height: 2.2; letter-spacing: 0.04em; margin-bottom: 1.5rem;
+  }
+  .section-text:last-child { margin-bottom: 0; }
+
+  .section-dark {
+    background: var(--c-forest); color: var(--c-cream);
+    position: relative; overflow: hidden;
+  }
+  .section-dark::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(139,115,85,0.12) 0%, transparent 60%);
+  }
+  .section-dark .section-label { color: var(--c-wood-light); }
+  .section-dark .section-label::before { background: var(--c-wood-light); }
+  .section-dark .section-heading { color: var(--c-cream); }
+  .section-dark .section-text { color: rgba(250,248,244,0.75); }
+  .section-warm { background: var(--c-bg-warm); }
+  .section-cream { background: var(--c-cream); }
+
+  /* ═══ POEM ═══ */
+  .poem {
+    padding: 7rem 2rem; text-align: center;
+    background: linear-gradient(180deg, var(--c-bg) 0%, var(--c-bg-warm) 100%);
+  }
+  .poem-line {
+    font-family: var(--font-jp);
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    font-weight: 300; color: var(--c-text);
+    letter-spacing: 0.12em; line-height: 2.8;
+  }
+  .poem-break { display: block; height: 1.2rem; }
+  .poem-emphasis {
+    font-weight: 400; color: var(--c-forest);
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  }
+
+  /* ═══ EXPERIENCE GRID ═══ */
+  .exp-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin-top: 3rem;
+  }
+  .exp-card {
+    padding: 2.5rem 2rem; position: relative;
+    border-right: 1px solid rgba(250,248,244,0.1);
+  }
+  .exp-card:last-child { border-right: none; }
+  .exp-number {
+    font-family: var(--font-display); font-size: 2.2rem;
+    font-weight: 300; color: var(--c-wood-light); line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .exp-title {
+    font-family: var(--font-jp); font-size: 0.95rem;
+    font-weight: 500; color: var(--c-cream);
+    letter-spacing: 0.08em; margin-bottom: 0.8rem;
+  }
+  .exp-desc {
+    font-family: var(--font-jp); font-size: 0.8rem;
+    font-weight: 300; color: rgba(250,248,244,0.55);
+    line-height: 2; letter-spacing: 0.03em;
+  }
+
+  /* ═══ DIAGRAM ═══ */
+  .diagram-wrap {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2.5rem; margin-top: 3rem;
+  }
+  .diagram-card {
+    text-align: center; padding: 2.5rem 1.5rem 2rem;
+    position: relative;
+  }
+  .diagram-card-no { border: 1px solid var(--c-sand); background: var(--c-bg); }
+  .diagram-card-yes { border: 2px solid var(--c-accent); background: var(--c-cream); }
+  .diagram-badge {
+    position: absolute; top: -0.7rem; left: 50%;
+    transform: translateX(-50%); padding: 0.2rem 1rem;
+    font-family: var(--font-sans); font-size: 0.55rem;
+    letter-spacing: 0.3em; text-transform: uppercase; white-space: nowrap;
+  }
+  .diagram-badge-no { background: var(--c-bg); color: var(--c-text-light); border: 1px solid var(--c-sand); }
+  .diagram-badge-yes { background: var(--c-accent); color: #fff; }
+  .diagram-house { width: 100%; max-width: 180px; margin: 0 auto 1.5rem; }
+  .diagram-floor {
+    padding: 1rem 0; text-align: center;
+    font-family: var(--font-jp); font-size: 0.85rem;
+    font-weight: 400; letter-spacing: 0.08em;
+  }
+  .diagram-roof {
+    width: 0; height: 0; margin: 0 auto;
+    border-left: 90px solid transparent;
+    border-right: 90px solid transparent;
+  }
+  .diagram-roof-gray { border-bottom: 45px solid var(--c-sand); }
+  .diagram-roof-green { border-bottom: 45px solid var(--c-accent); }
+  .floor-log { background: var(--c-accent); color: #fff; }
+  .floor-frame { background: var(--c-sand); color: var(--c-text-light); }
+  .diagram-label {
+    font-family: var(--font-jp); font-size: 0.82rem;
+    font-weight: 400; color: var(--c-forest);
+    letter-spacing: 0.05em; margin-bottom: 0.5rem;
+  }
+  .diagram-desc {
+    font-family: var(--font-jp); font-size: 0.75rem;
+    font-weight: 300; color: var(--c-text-light);
+    line-height: 1.8; letter-spacing: 0.02em;
+  }
+
+  /* ═══ STAT GRID ═══ */
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 3rem;
+  }
+  .stat-card {
+    text-align: center; padding: 2rem 1rem;
+    border-right: 1px solid rgba(250,248,244,0.1);
+  }
+  .stat-card:last-child { border-right: none; }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 300; color: var(--c-cream); line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-unit {
+    font-family: var(--font-jp); font-size: 0.78rem;
+    font-weight: 300; color: var(--c-wood-light);
+    letter-spacing: 0.1em; margin-bottom: 0.6rem;
+  }
+  .stat-desc {
+    font-family: var(--font-jp); font-size: 0.7rem;
+    font-weight: 300; color: rgba(250,248,244,0.4);
+    line-height: 1.7;
+  }
+
+  /* ═══ GALLERY ═══ */
+  .gallery-row {
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 0.5rem; margin-top: 3rem;
+  }
+  .gallery-img {
+    width: 100%; height: 100%; min-height: 240px;
+    object-fit: cover; display: block;
+    filter: saturate(0.9) contrast(0.95); transition: filter 0.4s;
+  }
+  .gallery-img:hover { filter: saturate(1) contrast(1); }
+
+  /* ═══ TESTIMONIAL ═══ */
+  .testimonial {
+    padding: 5rem 2rem; text-align: center;
+    background: var(--c-cream); position: relative;
+  }
+  .testimonial::before, .testimonial::after {
+    content: ''; position: absolute; left: 50%;
+    transform: translateX(-50%); width: 1px; height: 40px;
+  }
+  .testimonial::before { top: 0; background: linear-gradient(to bottom, transparent, var(--c-sand)); }
+  .testimonial::after { bottom: 0; background: linear-gradient(to top, transparent, var(--c-sand)); }
+  .testimonial-text {
+    font-family: var(--font-jp);
+    font-size: clamp(0.92rem, 1.4vw, 1.05rem);
+    font-weight: 300; color: var(--c-text);
+    letter-spacing: 0.08em; line-height: 2.4;
+    max-width: 600px; margin: 0 auto 1.5rem;
+  }
+  .testimonial-author {
+    font-family: var(--font-jp); font-size: 0.78rem;
+    font-weight: 400; color: var(--c-wood); letter-spacing: 0.1em;
+  }
+
+  /* ═══ ACCESS ═══ */
+  .access-layout {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; margin-top: 3rem; align-items: start;
+  }
+  .access-map {
+    width: 100%; aspect-ratio: 4/3;
+    border: 1px solid var(--c-sand); background: var(--c-bg-warm);
+  }
+  .access-map iframe { width: 100%; height: 100%; border: 0; }
+  .access-item {
+    padding: 1.2rem 0; border-bottom: 1px solid var(--c-sand);
+  }
+  .access-item:first-child { padding-top: 0; }
+  .access-label {
+    font-family: var(--font-sans); font-size: 0.6rem;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--c-accent); margin-bottom: 0.4rem;
+  }
+  .access-value {
+    font-family: var(--font-jp); font-size: 0.88rem;
+    font-weight: 300; color: var(--c-text);
+    line-height: 1.8; letter-spacing: 0.03em;
+  }
+  .access-value a { color: var(--c-forest); text-decoration: none; }
+  .access-note {
+    font-family: var(--font-jp); font-size: 0.78rem;
+    font-weight: 300; color: var(--c-text-light);
+    line-height: 1.8; margin-top: 1.5rem;
+  }
+
+  /* ═══ PROMISE ═══ */
+  .promise-section {
+    padding: 4.5rem 2rem; text-align: center; background: var(--c-bg-warm);
+  }
+  .promise-title {
+    font-family: var(--font-jp); font-size: 0.95rem;
+    font-weight: 400; color: var(--c-forest);
+    letter-spacing: 0.1em; margin-bottom: 1.5rem;
+  }
+  .promise-list {
+    display: flex; justify-content: center;
+    gap: 2.5rem; flex-wrap: wrap;
+  }
+  .promise-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-jp); font-size: 0.85rem;
+    font-weight: 300; color: var(--c-forest); letter-spacing: 0.05em;
+  }
+  .promise-check {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--c-accent); display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .promise-check svg {
+    width: 10px; height: 10px; stroke: #fff;
+    fill: none; stroke-width: 2.5;
+  }
+
+  /* ═══ FAQ ═══ */
+  .faq-list { margin-top: 2.5rem; }
+  .faq-item { border-bottom: 1px solid var(--c-sand); padding: 1.5rem 0; }
+  .faq-q {
+    font-family: var(--font-jp); font-size: 0.88rem;
+    font-weight: 500; color: var(--c-forest);
+    letter-spacing: 0.05em; margin-bottom: 0.8rem;
+    display: flex; align-items: baseline; gap: 0.8rem;
+  }
+  .faq-q::before {
+    content: 'Q'; font-family: var(--font-display);
+    font-size: 1.1rem; font-weight: 300; color: var(--c-accent); flex-shrink: 0;
+  }
+  .faq-a {
+    font-family: var(--font-jp); font-size: 0.82rem;
+    font-weight: 300; color: var(--c-text-light);
+    line-height: 2; letter-spacing: 0.03em; padding-left: 1.9rem;
+  }
+
+  /* ═══ CTA ═══ */
+  .cta-section {
+    background: var(--c-forest); text-align: center;
+    padding: 6rem 2rem; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(139,115,85,0.1) 0%, transparent 70%);
+  }
+  .cta-heading {
+    font-family: var(--font-jp);
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    font-weight: 300; color: var(--c-cream);
+    letter-spacing: 0.15em; line-height: 2;
+    margin-bottom: 0.8rem; position: relative;
+  }
+  .cta-sub {
+    font-family: var(--font-jp); font-size: 0.82rem;
+    font-weight: 200; color: rgba(250,248,244,0.45);
+    letter-spacing: 0.08em; line-height: 1.8;
+    margin-bottom: 2.5rem; position: relative;
+  }
+  .cta-buttons {
+    display: flex; justify-content: center; gap: 1.2rem;
+    flex-wrap: wrap; position: relative;
+  }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 1rem 2.5rem;
+    font-family: var(--font-jp); font-size: 0.85rem;
+    letter-spacing: 0.12em; text-decoration: none; transition: all 0.4s;
+  }
+  .cta-btn-primary {
+    background: var(--c-cream); color: var(--c-forest);
+    border: 1px solid var(--c-cream);
+  }
+  .cta-btn-primary:hover { background: transparent; color: var(--c-cream); }
+  .cta-btn-secondary {
+    background: transparent; color: var(--c-cream);
+    border: 1px solid rgba(250,248,244,0.3);
+  }
+  .cta-btn-secondary:hover {
+    border-color: var(--c-cream); background: rgba(250,248,244,0.08);
+  }
+  .cta-tel {
+    font-family: var(--font-display); font-size: 1.3rem;
+    font-weight: 300; color: rgba(250,248,244,0.6);
+    letter-spacing: 0.08em; margin-top: 1.8rem; position: relative;
+  }
+  .cta-tel a { color: rgba(250,248,244,0.6); text-decoration: none; transition: color 0.3s; }
+  .cta-tel a:hover { color: var(--c-cream); }
+  .cta-tel-label {
+    font-family: var(--font-jp); font-size: 0.7rem;
+    font-weight: 300; color: rgba(250,248,244,0.3);
+    letter-spacing: 0.1em; margin-top: 0.3rem;
+  }
+
+  /* ═══ FOOTER ═══ */
+  footer {
+    padding: 3rem; text-align: center; background: var(--c-dark);
+  }
+  .footer-logo { height: 16px; margin: 0 auto 0.5rem; }
+  .footer-logo img {
+    height: 100%; width: auto; display: block;
+    margin: 0 auto; opacity: 0.5;
+  }
+  .footer-sub {
+    font-family: var(--font-display); font-size: 0.85rem;
+    font-style: italic; color: rgba(250,248,244,0.25); margin-top: 0.3rem;
+  }
+  .footer-links {
+    display: flex; justify-content: center; gap: 2rem;
+    margin-top: 1.5rem; flex-wrap: wrap;
+  }
+  .footer-link {
+    font-family: var(--font-jp); font-size: 0.72rem;
+    font-weight: 300; color: rgba(250,248,244,0.3);
+    text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s;
+  }
+  .footer-link:hover { color: rgba(250,248,244,0.6); }
+  .footer-copy {
+    font-family: var(--font-sans); font-size: 0.6rem;
+    color: rgba(250,248,244,0.12); margin-top: 1.5rem; letter-spacing: 0.1em;
+  }
+
+  /* ═══ REVEAL ═══ */
+  .reveal {
+    opacity: 0; transform: translateY(35px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.15s; }
+  .reveal-d2 { transition-delay: 0.3s; }
+  .reveal-d3 { transition-delay: 0.45s; }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 1024px) {
+    .exp-grid { grid-template-columns: 1fr; }
+    .exp-card { border-right: none; border-bottom: 1px solid rgba(250,248,244,0.1); padding: 2rem 1.5rem; }
+    .exp-card:last-child { border-bottom: none; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-card:nth-child(2) { border-right: none; }
+    .access-layout { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-logo { height: 18px; }
+    section { padding: 5rem 1.5rem; }
+    .hero-title { letter-spacing: 0.08em; line-height: 1.9; }
+    .hero-meta { gap: 1rem; }
+    .poem { padding: 5rem 1.5rem; }
+    .diagram-wrap { grid-template-columns: 1fr; gap: 2rem; }
+    .diagram-roof { border-left-width: 80px; border-right-width: 80px; }
+    .diagram-roof-gray, .diagram-roof-green { border-bottom-width: 40px; }
+    .gallery-row { grid-template-columns: 1fr 1fr; }
+    .gallery-row > *:first-child { grid-column: span 2; }
+    .promise-list { gap: 1.5rem; }
+    .cta-section { padding: 5rem 1.5rem; }
+    footer { padding: 2.5rem 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    nav { padding: 0.8rem 1rem; }
+    .nav-logo { height: 15px; }
+    .nav-cta-btn { font-size: 0.7rem; padding: 0.5rem 1rem; }
+    section { padding: 4rem 1.2rem; }
+    .hero-sub { font-size: 0.82rem; }
+    .hero-meta { flex-direction: column; align-items: center; gap: 0.5rem; }
+    .poem { padding: 4rem 1.2rem; }
+    .poem-line { font-size: 0.9rem; letter-spacing: 0.08em; }
+    .section-text { font-size: 0.9rem; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-row { grid-template-columns: 1fr; }
+    .gallery-row > *:first-child { grid-column: span 1; }
+    .gallery-img { min-height: 180px; }
+    .promise-list { flex-direction: column; align-items: center; gap: 1rem; }
+    .cta-section { padding: 4rem 1.2rem; }
+    .cta-buttons { flex-direction: column; align-items: center; }
+    footer { padding: 2rem 1rem; }
+  }
+  @supports (min-height: 100svh) { .hero { height: 100svh; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+    .hero-eyecatch, .hero-title, .hero-sub, .hero-meta, .hero-cta {
+      opacity: 1; transform: none;
+    }
+  }
+  @media print {
+    nav, .hero-scroll { display: none; }
+    body::after { display: none; }
+    .hero { height: auto; min-height: 200px; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><img src="talo-logo-green.png" alt="TALO"></a>
+  <a href="#reserve" class="nav-cta-btn">来場予約する</a>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyecatch">TALO Tokyo Exhibition</p>
+    <h1 class="hero-title">本物の木の家を、<br>確かめに来てください。</h1>
+    <p class="hero-sub">壁紙の中に木目をプリントした家ではない。<br>壁そのものが、無垢の木でできた家。<br>その違いは、触ればわかります。</p>
+    <div class="hero-meta">
+      <span class="hero-meta-item">
+        <svg class="hero-meta-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        世田谷区・喜多見駅 徒歩5分
+      </span>
+      <span class="hero-meta-item">
+        <svg class="hero-meta-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        完全予約制・無料
+      </span>
+    </div>
+    <a href="#reserve" class="hero-cta">来場予約する</a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ POEM ═══════════════════ -->
+<div class="poem">
+  <div class="reveal">
+    <p class="poem-line">カタログの写真は美しい。</p>
+    <p class="poem-line">3Dパースもよくできている。</p>
+    <span class="poem-break"></span>
+    <p class="poem-line">でも、木の香りはしない。</p>
+    <p class="poem-line">壁の手ざわりもわからない。</p>
+    <p class="poem-line">その空間に立ったとき、</p>
+    <p class="poem-line">自分がどう感じるか——も。</p>
+    <span class="poem-break"></span>
+    <p class="poem-line poem-emphasis">家は一生に一度の選択だから、</p>
+    <p class="poem-line poem-emphasis">画面の向こうではなく、</p>
+    <p class="poem-line poem-emphasis">自分の五感で確かめてほしい。</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ WHAT YOU EXPERIENCE ═══════════════════ -->
+<section class="section-dark">
+  <div class="section-wide" style="position:relative;">
+    <div class="section-label reveal">What You Experience</div>
+    <h2 class="section-heading reveal reveal-d1">展示場で体感できること。</h2>
+    <p class="section-text reveal reveal-d2">東京展示場は、実際のログハウスの中に入り、構造・素材・空気感をご体感いただく場所です。1組ずつのプライベートなご案内なので、時間を気にせず、ゆっくりお確かめいただけます。</p>
+    <div class="exp-grid reveal reveal-d2">
+      <div class="exp-card">
+        <div class="exp-number">01</div>
+        <div class="exp-title">木の手ざわりと香り</div>
+        <div class="exp-desc">分厚い無垢材の壁に手を触れてください。木目の表情、温もり、そして室内に満ちる木の香り。この空気感は、来ないとわかりません。</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-number">02</div>
+        <div class="exp-title">総ログ構造を間近で</div>
+        <div class="exp-desc">1階から2階まですべてログで積む「総ログ」の接合部、ダボ、セトリング対策。完成後には見えない構造の中身を、この目で確かめられます。</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-number">03</div>
+        <div class="exp-title">暮らし方のご相談</div>
+        <div class="exp-desc">自宅として、別荘として、二拠点生活の拠点として。土地の条件やご予算、ライフスタイルに合わせた自由設計の可能性をお話しします。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ WHY REAL WOOD ═══════════════════ -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">Real Wood, Real House</div>
+    <h2 class="section-heading reveal reveal-d1">「木の家」と「木を使った家」は、<br>まったく違う。</h2>
+    <p class="section-text reveal reveal-d2">一般的な木造住宅では、構造材は壁の中に隠れている。室内に見える「木」は、多くの場合、合板の表面に木目を印刷したシートである。見た目は木でも、触ると冷たい。香りもしない。湿度も調整しない。</p>
+    <p class="section-text reveal reveal-d2">TALOのログハウスは、壁そのものが無垢の木で構成されている。構造材がそのまま内装であり、外装であり、断熱材であり、調湿装置でもある。見える、触れる、香る、呼吸する。それが「本物の木の家」と「木を使った家」の決定的な違いである。</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ LOG ON LOG DIAGRAM ═══════════════════ -->
+<section class="section-warm">
+  <div class="section-wide">
+    <div class="section-label reveal">LOG on LOG</div>
+    <h2 class="section-heading reveal reveal-d1">TALOは、なぜ「総ログ」にこだわるのか。</h2>
+    <p class="section-text reveal reveal-d2">多くのログハウスメーカーは1階だけをログ壁で積み、2階は一般的な軸組工法で仕上げる。見た目はログハウスでも、2階に暮らす家族はログの恩恵を受けられない。TALOは1階から2階まで、すべてログで積み上げる「総ログ」にこだわる。</p>
+
+    <div class="diagram-wrap reveal reveal-d2">
+      <div class="diagram-card diagram-card-no">
+        <div class="diagram-badge diagram-badge-no">一般的なログハウス</div>
+        <div class="diagram-house">
+          <div class="diagram-roof diagram-roof-gray"></div>
+          <div class="diagram-floor floor-frame">2F：軸組工法</div>
+          <div class="diagram-floor floor-log">1F：ログ壁</div>
+        </div>
+        <div class="diagram-label">1階のみログ</div>
+        <div class="diagram-desc">2階は一般工法。ログハウスの性能が家全体に届かない。</div>
+      </div>
+      <div class="diagram-card diagram-card-yes">
+        <div class="diagram-badge diagram-badge-yes">TALO — LOG on LOG</div>
+        <div class="diagram-house">
+          <div class="diagram-roof diagram-roof-green"></div>
+          <div class="diagram-floor floor-log">2F：ログ壁</div>
+          <div class="diagram-floor floor-log">1F：ログ壁</div>
+        </div>
+        <div class="diagram-label">総ログ</div>
+        <div class="diagram-desc">全面ログ壁。耐震・耐火・調湿・蓄熱のすべてが家全体で機能する。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PERFORMANCE ═══════════════════ -->
+<section class="section-dark">
+  <div class="section-wide" style="position:relative;">
+    <div class="section-label reveal">Performance</div>
+    <h2 class="section-heading reveal reveal-d1">総ログが守る、4つの性能。</h2>
+    <p class="section-text reveal reveal-d2">美しさだけではない。分厚い無垢材の壁は、住む人を地震・火災・湿度・経年から守り続ける。それがTALOの総ログを選ぶ、合理的な理由です。</p>
+    <div class="stat-grid reveal reveal-d2">
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-unit">耐震等級</div>
+        <div class="stat-desc">建築基準法の1.5倍。大震災での倒壊報告ゼロ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">60<span style="font-size:0.5em">min</span></div>
+        <div class="stat-unit">耐火認定</div>
+        <div class="stat-desc">炭化層が内部を守る。有害ガスも抑える</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50<span style="font-size:0.5em">%</span></div>
+        <div class="stat-unit">自然調湿</div>
+        <div class="stat-desc">機械に頼らず室内湿度40〜60%を維持</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100<span style="font-size:0.4em">年+</span></div>
+        <div class="stat-unit">耐久性</div>
+        <div class="stat-desc">木は200年強度が上がり続ける</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="logonlog.html" style="display:inline-flex;align-items:center;gap:0.6rem;font-family:var(--font-sans);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;color:var(--c-wood-light);transition:color 0.3s;" class="reveal reveal-d3">技術的な詳細を見る &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ GALLERY ═══════════════════ -->
+<section>
+  <div class="section-wide">
+    <div class="section-label reveal">Works</div>
+    <h2 class="section-heading reveal reveal-d1">すべてが自由設計。4700棟の実績。</h2>
+    <p class="section-text reveal reveal-d2">平屋も、総二階も。都市部の住宅地も、山間の傾斜地も。TALOはすべて自由設計。展示場では、過去の施工事例集もご覧いただけます。</p>
+    <div class="gallery-row reveal reveal-d2">
+      <img src="img-gallery1.jpg" alt="TALO施工例" class="gallery-img">
+      <img src="img-gallery2.jpg" alt="TALO施工例" class="gallery-img">
+      <img src="img-hero3.jpg" alt="TALO施工例" class="gallery-img">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TESTIMONIAL ═══════════════════ -->
+<div class="testimonial">
+  <div class="reveal">
+    <p class="testimonial-text">「展示場で壁に触れた瞬間、<br>『この家がいい』と思いました。<br>カタログだけでは、<br>この感覚は絶対にわからなかった」</p>
+    <p class="testimonial-author">—— TALOオーナー</p>
+  </div>
+</div>
+
+<!-- ═══════════════════ ACCESS ═══════════════════ -->
+<section id="reserve">
+  <div class="section-wide">
+    <div class="section-label reveal">Access &amp; Reservation</div>
+    <h2 class="section-heading reveal reveal-d1">東京展示場のご案内</h2>
+    <p class="section-text reveal reveal-d2">小田急線・喜多見駅から徒歩5分。お仕事帰りでも、週末のお出かけついでにも。まずは気軽にお立ち寄りください。</p>
+    <div class="access-layout reveal reveal-d2">
+      <div class="access-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.5!2d139.5956!3d35.6422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018f1c7f1f1f1f1%3A0x1234567890abcdef!2z5p2x5Lqs6YO95LiW55Sw6LC35Yy65Zac5aSa6KaL!5e0!3m2!1sja!2sjp!4v1711234567890!5m2!1sja!2sjp" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="access-info">
+        <div class="access-item">
+          <div class="access-label">Address</div>
+          <div class="access-value">〒157-0067<br>東京都世田谷区喜多見9-12-8</div>
+        </div>
+        <div class="access-item">
+          <div class="access-label">Access</div>
+          <div class="access-value">小田急線「喜多見駅」北口 徒歩5分<br>お車の方は近隣コインパーキングをご利用ください</div>
+        </div>
+        <div class="access-item">
+          <div class="access-label">Open</div>
+          <div class="access-value">10:00 — 16:00（完全予約制）</div>
+        </div>
+        <div class="access-item">
+          <div class="access-label">Tel</div>
+          <div class="access-value"><a href="tel:0354945922">03-5494-5922</a></div>
+        </div>
+        <div class="access-note">※ 完全予約制のため、事前にご予約をお願いいたします。<br>※ ご家族やパートナーとご一緒にどうぞ。<br>※ 成城にあるTALO本社ショールーム（ログウォールや仕様サンプルの展示）もあわせてご案内可能です。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PROMISE ═══════════════════ -->
+<div class="promise-section">
+  <div class="reveal">
+    <p class="promise-title">TALOのお約束</p>
+    <div class="promise-list">
+      <div class="promise-item">
+        <div class="promise-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        ご来場後の営業電話はしません
+      </div>
+      <div class="promise-item">
+        <div class="promise-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        突然の訪問営業もしません
+      </div>
+      <div class="promise-item">
+        <div class="promise-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        1組ずつプライベートでご案内
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ FAQ ═══════════════════ -->
+<section class="section-cream">
+  <div class="section-inner">
+    <div class="section-label reveal">FAQ</div>
+    <h2 class="section-heading reveal reveal-d1">よくあるご質問</h2>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-q">まだ漠然と考えている段階ですが大丈夫ですか？</div>
+        <div class="faq-a">もちろんです。「ログハウスってどんなものだろう？」という段階の方も多くいらっしゃいます。実物に触れることで、はじめて具体的なイメージが湧いたというお声をよくいただきます。</div>
+      </div>
+      <div class="faq-item reveal reveal-d1">
+        <div class="faq-q">所要時間はどのくらいですか？</div>
+        <div class="faq-a">展示場のご見学は30分〜1時間程度です。間取りやご予算のご相談まで含めると1.5〜2時間ほど。お時間に限りがある場合は、ご予約時にお知らせください。</div>
+      </div>
+      <div class="faq-item reveal reveal-d2">
+        <div class="faq-q">子ども連れでも大丈夫ですか？</div>
+        <div class="faq-a">大歓迎です。お子さんが木の空間ではしゃぐ姿を見て「この家に決めた」とおっしゃるご家族もいらっしゃいます。</div>
+      </div>
+      <div class="faq-item reveal reveal-d3">
+        <div class="faq-q">土地がまだ決まっていませんが相談できますか？</div>
+        <div class="faq-a">はい。TALOは全国の代理店ネットワークを通じて、土地探しからお手伝いすることも可能です。まずはご希望のエリアや暮らし方をお聞かせください。</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">ログハウスは都市部にも建てられますか？</div>
+        <div class="faq-a">はい。TALOは60分耐火認定を取得しており、防火地域でもログ壁のまま建設が可能です（一定規模まで）。都市部での施工実績も多数あります。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<div class="cta-section">
+  <p class="cta-heading reveal">本物の木の家を、<br>あなたの目で、手で、確かめてください。</p>
+  <p class="cta-sub reveal reveal-d1">完全予約制・無料。世田谷区・喜多見駅から徒歩5分。</p>
+  <div class="cta-buttons">
+    <a href="https://www.talo.co.jp/exhibition/tokyo/" class="cta-btn cta-btn-primary reveal reveal-d2">WEBで来場予約する</a>
+    <a href="https://www.talo.co.jp/catalog/" class="cta-btn cta-btn-secondary reveal reveal-d3">まずは資料請求</a>
+  </div>
+  <div class="cta-tel reveal reveal-d3">
+    <a href="tel:0354945922">03-5494-5922</a>
+    <div class="cta-tel-label">受付時間 10:00–18:00</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="footer-logo"><img src="talo-logo-white.png" alt="TALO"></div>
+  <div class="footer-sub">Terve Talo — since 1988</div>
+  <div class="footer-links">
+    <a href="https://www.talo.co.jp/" class="footer-link">TALOトップ</a>
+    <a href="concept.html" class="footer-link">コンセプト</a>
+    <a href="logonlog.html" class="footer-link">LOG on LOG</a>
+    <a href="story.html" class="footer-link">ストーリー</a>
+    <a href="https://www.talo.co.jp/example/" class="footer-link">施工事例</a>
+  </div>
+  <p class="footer-copy">&copy; 2007–2026 TALO International. All Rights Reserved.</p>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+</body>
+</html>
